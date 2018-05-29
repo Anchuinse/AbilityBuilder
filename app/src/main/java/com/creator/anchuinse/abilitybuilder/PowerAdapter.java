@@ -1,6 +1,10 @@
 package com.creator.anchuinse.abilitybuilder;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+
+import static com.creator.anchuinse.abilitybuilder.R.color.recycler_color1;
 
 /**
  * Created by Matt on 5/28/18.
@@ -46,6 +52,13 @@ public class PowerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 Toast.makeText(context, categories.get(position).getName(),Toast.LENGTH_SHORT).show();
             }
         });
+
+        if(position%2 == 1){
+            holder.itemView.setBackgroundColor(Color.LTGRAY);
+        }
+        else{
+            holder.itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.recycler_color1));
+        }
     }
 
     @Override

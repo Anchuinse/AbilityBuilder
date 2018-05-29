@@ -11,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:text="Description of Power"
-        android:layout_weight="1.6"/>
+        android:layout_weight="1.6"
+        android:background="@color/description_backgrounds"/>
 
     <TextView
         android:id="@+id/power_cost"
@@ -20,7 +21,8 @@
         android:layout_margin="8dp"
         android:layout_weight="1.99"
         android:textAppearance="@android:style/TextAppearance.Large"
-        android:text="Cost" />
+        android:text="Cost"
+        android:background="@color/test"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/power_recyclerview"

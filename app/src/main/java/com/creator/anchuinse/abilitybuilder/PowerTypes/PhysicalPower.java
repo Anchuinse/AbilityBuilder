@@ -14,13 +14,19 @@ public class PhysicalPower extends Power {
 
     public PhysicalPower(){
         super();
+        categories.add(PieceCategory.Physical_Activation_Time());
+        categories.add(PieceCategory.Physical_Duration());
         categories.add(PieceCategory.Physical_Range());
+        categories.add(PieceCategory.Physical_Saving_Throw());
         categories.add(PieceCategory.Physical_Use_Time());
     }
 
     public PhysicalPower(String new_name){
         super(new_name);
+        categories.add(PieceCategory.Physical_Activation_Time());
+        categories.add(PieceCategory.Physical_Duration());
         categories.add(PieceCategory.Physical_Range());
+        categories.add(PieceCategory.Physical_Saving_Throw());
         categories.add(PieceCategory.Physical_Use_Time());
     }
 

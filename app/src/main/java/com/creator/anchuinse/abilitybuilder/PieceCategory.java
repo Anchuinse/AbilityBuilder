@@ -28,6 +28,8 @@ public class PieceCategory {
         selected = new_selected;
     }
 
+    //-----------
+
     public static PieceCategory Physical_Use_Time(){
         ArrayList<PiecePart> parts = new ArrayList<PiecePart>();
         parts.add(new PiecePart("Instant",1));
@@ -52,6 +54,47 @@ public class PieceCategory {
         range.setCheapest();
         return range;
     }
+
+    public static PieceCategory Physical_Duration(){
+        ArrayList<PiecePart> parts = new ArrayList<PiecePart>();
+        parts.add(new PiecePart("Instant",1));
+        parts.add(new PiecePart("Short",2));
+        parts.add(new PiecePart("Medium",3));
+        parts.add(new PiecePart("Long",4));
+
+        PieceCategory duration = new PieceCategory("Duration");
+        duration.setPiece_parts(parts);
+        duration.setCheapest();
+        return duration;
+    }
+
+    public static PieceCategory Physical_Activation_Time(){
+        ArrayList<PiecePart> parts = new ArrayList<PiecePart>();
+        parts.add(new PiecePart("Immediate",1));
+        parts.add(new PiecePart("Slight Delay",2));
+        parts.add(new PiecePart("Medium Delay",3));
+        parts.add(new PiecePart("Long Delay",4));
+
+        PieceCategory activation = new PieceCategory("Activation Time");
+        activation.setPiece_parts(parts);
+        activation.setCheapest();
+        return activation;
+    }
+
+    public static PieceCategory Physical_Saving_Throw(){
+        ArrayList<PiecePart> parts = new ArrayList<PiecePart>();
+        parts.add(new PiecePart("Negates",1));
+        parts.add(new PiecePart("Disbelief",2));
+        parts.add(new PiecePart("Partial",3));
+        parts.add(new PiecePart("None",4));
+
+        PieceCategory saving = new PieceCategory("Saving Throw");
+        saving.setPiece_parts(parts);
+        saving.setCheapest();
+        return saving;
+    }
+
+    //-----------
 
     public String getName() {
         return name;
