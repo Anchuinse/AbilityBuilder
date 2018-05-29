@@ -1,5 +1,6 @@
 package com.creator.anchuinse.abilitybuilder.PowerTypes;
 
+import com.creator.anchuinse.abilitybuilder.ComplexCategory;
 import com.creator.anchuinse.abilitybuilder.PieceCategory;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class PhysicalPower extends Power {
         categories.add(PieceCategory.Physical_Range());
         categories.add(PieceCategory.Physical_Saving_Throw());
         categories.add(PieceCategory.Physical_Use_Time());
+        categories.add(ComplexCategory.Physical_Effected_Target());
     }
 
     public PhysicalPower(String new_name){
@@ -28,6 +30,7 @@ public class PhysicalPower extends Power {
         categories.add(PieceCategory.Physical_Range());
         categories.add(PieceCategory.Physical_Saving_Throw());
         categories.add(PieceCategory.Physical_Use_Time());
+        categories.add(ComplexCategory.Physical_Effected_Target());
     }
 
     public ArrayList<PieceCategory> getCategories() {

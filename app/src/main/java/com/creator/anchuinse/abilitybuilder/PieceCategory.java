@@ -96,6 +96,32 @@ public class PieceCategory {
 
     //-----------
 
+    public static PieceCategory Complex_Part_Target_Type(){
+        ArrayList<PiecePart> parts = new ArrayList<PiecePart>();
+        parts.add(new PiecePart("Self",1));
+        parts.add(new PiecePart("Others",2));
+        parts.add(new PiecePart("Objects",3));
+
+        PieceCategory target = new PieceCategory("Target Type");
+        target.setPiece_parts(parts);
+        target.setCheapest();
+        return target;
+    }
+
+    public static PieceCategory Complex_Part_AoE(){
+        ArrayList<PiecePart> parts = new ArrayList<PiecePart>();
+        parts.add(new PiecePart("None/Ray/Point",1));
+        parts.add(new PiecePart("Line",2));
+        parts.add(new PiecePart("Cone",3));
+
+        PieceCategory area = new PieceCategory("Area of Effect");
+        area.setPiece_parts(parts);
+        area.setCheapest();
+        return area;
+    }
+
+    //-----------
+
     public String getName() {
         return name;
     }

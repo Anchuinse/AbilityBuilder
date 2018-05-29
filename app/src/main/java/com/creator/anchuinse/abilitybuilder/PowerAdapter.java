@@ -43,7 +43,14 @@ public class PowerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         //important one to change how things are viewed along with ViewHolder object
-        ((ViewHolder)holder).textView.setText(categories.get(position).getName());                                 //set items and such to their place in the ViewHolder
+        ((ViewHolder)holder).textView.setText(categories.get(position).getName());//set items and such to their place in the ViewHolder
+        if(categories.get(position) instanceof ComplexCategory) {
+            ((ViewHolder)holder).selected.setText(categories.get(position).getSelected().getName());
+        }
+        else {
+            ((ViewHolder)holder).selected.setText(categories.get(position).getSelected().getName() + ":");
+        }
+        ((ViewHolder)holder).cost.setText(String.valueOf(categories.get(position).getSelected().getCost()));
 
         ((ViewHolder) holder).parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,11 +76,15 @@ public class PowerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public class ViewHolder extends RecyclerView.ViewHolder{
         //use this to change how things are viewed at a later date along with onBindViewHolder
         TextView textView;                                                                          //assign items and such to the ViewHolder
+        TextView selected;
+        TextView cost;
         LinearLayout parentLayout;
 
         public ViewHolder(View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.category_item);
+            selected = itemView.findViewById(R.id.selected_display);
+            cost = itemView.findViewById(R.id.cost_display);
             parentLayout = itemView.findViewById(R.id.category_row_layout);
         }
     }

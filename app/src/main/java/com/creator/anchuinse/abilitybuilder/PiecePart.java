@@ -14,6 +14,15 @@ public class PiecePart {
         cost = new_cost;
     }
 
+    //------
+
+    public static PiecePart emptyPart(){
+        PiecePart empty_part = new PiecePart(" ", 0);
+        return empty_part;
+    }
+
+    //------
+
     public String getName() {
         return name;
     }
