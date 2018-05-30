@@ -11,8 +11,6 @@ import java.util.ArrayList;
 
 public class PhysicalPower extends Power {
 
-    ArrayList<PieceCategory> categories = new ArrayList<PieceCategory>();
-
     public PhysicalPower(){
         super();
         categories.add(PieceCategory.Physical_Activation_Time());
@@ -21,6 +19,7 @@ public class PhysicalPower extends Power {
         categories.add(PieceCategory.Physical_Saving_Throw());
         categories.add(PieceCategory.Physical_Use_Time());
         categories.add(ComplexCategory.Physical_Effected_Target());
+        this.refreshCurrentCost();
     }
 
     public PhysicalPower(String new_name){
@@ -31,13 +30,11 @@ public class PhysicalPower extends Power {
         categories.add(PieceCategory.Physical_Saving_Throw());
         categories.add(PieceCategory.Physical_Use_Time());
         categories.add(ComplexCategory.Physical_Effected_Target());
+        this.refreshCurrentCost();
     }
 
     public ArrayList<PieceCategory> getCategories() {
         return categories;
     }
 
-    public void setCategories(ArrayList<PieceCategory> categories) {
-        this.categories = categories;
-    }
 }

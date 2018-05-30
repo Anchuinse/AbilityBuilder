@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.creator.anchuinse.abilitybuilder.PowerTypes.PhysicalPower;
 import com.creator.anchuinse.abilitybuilder.PowerTypes.Power;
@@ -50,12 +51,24 @@ public class PowerActivity extends AppCompatActivity {
 
             setDescription(name);
         }
+        if(getIntent().hasExtra("power_cost")){
+            int cost = getIntent().getIntExtra("power_cost",999);
+
+            setCurrentCost(cost);
+        }
     }
 
     private void setDescription(String wanted_description){
 
         EditText description = findViewById(R.id.power_description);
         description.setText(wanted_description);
+    }
+
+    private void setCurrentCost(int new_current_cost){
+
+        TextView current_cost = findViewById(R.id.power_cost);
+        String display = Integer.toString(new_current_cost);
+        current_cost.setText("Cost: " + display);
     }
 
 }

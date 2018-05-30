@@ -53,6 +53,7 @@ public class PowersetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
                 Intent intent = new Intent(context, PowerActivity.class);
                 intent.putExtra("power_name", powers.get(position).getName());                        //attach extra stuff to the intent to specify which item we clicked
+                intent.putExtra("power_cost",powers.get(position).getCurrent_cost());
                 context.startActivity(intent);
             }
         });
