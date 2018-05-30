@@ -1,4 +1,4 @@
-package com.creator.anchuinse.abilitybuilder;
+package com.creator.anchuinse.abilitybuilder.Pieces;
 
 /**
  * Created by Matt on 5/28/18.

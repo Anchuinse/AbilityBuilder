@@ -1,6 +1,6 @@
 package com.creator.anchuinse.abilitybuilder.PowerTypes;
 
-import com.creator.anchuinse.abilitybuilder.PieceCategory;
+import com.creator.anchuinse.abilitybuilder.Pieces.Aspect;
 
 import java.util.ArrayList;
 
@@ -13,27 +13,27 @@ public class Power {
     String name;
     int current_cost;
     String description;
-    ArrayList<PieceCategory> categories = new ArrayList<PieceCategory>();
+    ArrayList<Aspect> categories = new ArrayList<Aspect>();
 
     public Power(){
         name = "no name";
         current_cost = 0;
         description = "no description";
-        ArrayList<PieceCategory> categories = new ArrayList<PieceCategory>();
+        ArrayList<Aspect> categories = new ArrayList<Aspect>();
     }
 
     public Power(String new_name) {
         name = new_name;
         current_cost = 0;
         description = "no description";
-        ArrayList<PieceCategory> categories = new ArrayList<PieceCategory>();
+        ArrayList<Aspect> categories = new ArrayList<Aspect>();
     }
 
     public Power(String new_name, String new_description) {
         name = new_name;
         current_cost = 0;
         description = new_description;
-        ArrayList<PieceCategory> categories = new ArrayList<PieceCategory>();
+        ArrayList<Aspect> categories = new ArrayList<Aspect>();
     }
 
     //-------
@@ -73,11 +73,11 @@ public class Power {
         this.description = description;
     }
 
-    public ArrayList<PieceCategory> getCategories() {
+    public ArrayList<Aspect> getCategories() {
         return categories;
     }
 
-    public void setCategories(ArrayList<PieceCategory> categories) {
+    public void setCategories(ArrayList<Aspect> categories) {
         this.categories = categories;
     }
 }

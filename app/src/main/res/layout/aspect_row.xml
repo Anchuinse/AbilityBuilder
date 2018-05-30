@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/category_row_layout"
+    android:id="@+id/aspect_row_layout"
     android:layout_width="match_parent"
     android:layout_height="40dp"
     android:orientation="vertical">
@@ -12,7 +12,7 @@
         android:layout_height="40dp">
 
         <TextView
-            android:id="@+id/category_item"
+            android:id="@+id/aspect_item"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_margin="2dp"
@@ -38,7 +38,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/cost_display"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@id/category_item"
+            app:layout_constraintStart_toEndOf="@id/aspect_item"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView

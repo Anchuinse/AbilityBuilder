@@ -1,9 +1,7 @@
 package com.creator.anchuinse.abilitybuilder;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -14,9 +12,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import com.creator.anchuinse.abilitybuilder.Pieces.ComplexAspect;
+import com.creator.anchuinse.abilitybuilder.Pieces.Aspect;
 
-import static com.creator.anchuinse.abilitybuilder.R.color.recycler_color1;
+import java.util.ArrayList;
 
 /**
  * Created by Matt on 5/28/18.
@@ -26,9 +25,9 @@ public class PowerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     //adapter to hold all the categories of a single power
 
     Context context;
-    ArrayList<PieceCategory> categories;
+    ArrayList<Aspect> categories;
 
-    public PowerAdapter(Context context, ArrayList<PieceCategory> categories){
+    public PowerAdapter(Context context, ArrayList<Aspect> categories){
         this.context = context;
         this.categories = categories;
     }
@@ -36,7 +35,7 @@ public class PowerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View row = inflater.inflate(R.layout.category_row,parent,false);
+        View row = inflater.inflate(R.layout.aspect_row,parent,false);
         ViewHolder item = new ViewHolder(row);
         return item;
     }
@@ -46,7 +45,7 @@ public class PowerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         //important one to change how things are viewed along with ViewHolder object
         ((ViewHolder)holder).textView.setText(categories.get(position).getName());
 
-        if(categories.get(position) instanceof ComplexCategory) {
+        if(categories.get(position) instanceof ComplexAspect) {
             ((ViewHolder)holder).selected.setText(categories.get(position).getSelected().getName());
         }
         else {
@@ -62,7 +61,7 @@ public class PowerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             }
         });
 
-        //-------
+        //----------
 
         if(position%2 == 1){
             holder.itemView.setBackgroundColor(Color.LTGRAY);
@@ -71,7 +70,7 @@ public class PowerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             holder.itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.recycler_color1));
         }
 
-        //-------
+        //----------
 
         ((ViewHolder)holder).parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,7 +78,7 @@ public class PowerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
                 Toast.makeText(context, "nailed it",Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent(context, CategoryActivity.class);
+                Intent intent = new Intent(context, AspectActivity.class);
                 context.startActivity(intent);
             }
         });
@@ -99,10 +98,10 @@ public class PowerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         public ViewHolder(View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.category_item);
+            textView = itemView.findViewById(R.id.aspect_item);
             selected = itemView.findViewById(R.id.selected_display);
             cost = itemView.findViewById(R.id.cost_display);
-            parentLayout = itemView.findViewById(R.id.category_row_layout);
+            parentLayout = itemView.findViewById(R.id.aspect_row_layout);
         }
     }
 }

@@ -6,10 +6,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.creator.anchuinse.abilitybuilder.Pieces.Aspect;
 import com.creator.anchuinse.abilitybuilder.PowerTypes.PhysicalPower;
-import com.creator.anchuinse.abilitybuilder.PowerTypes.Power;
 
 import java.util.ArrayList;
 
@@ -20,7 +19,7 @@ import java.util.ArrayList;
 public class PowerActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;                                              //make sure to initiate lists used in RecyclerView right away
-    ArrayList<PieceCategory> categories = new ArrayList<PieceCategory>();
+    ArrayList<Aspect> categories = new ArrayList<Aspect>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
