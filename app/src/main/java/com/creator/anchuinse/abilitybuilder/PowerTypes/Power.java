@@ -11,14 +11,12 @@ import java.util.ArrayList;
 public class Power {
 
     String name;
-    int total_cost;
     int current_cost;
     String description;
     ArrayList<PieceCategory> categories = new ArrayList<PieceCategory>();
 
     public Power(){
         name = "no name";
-        total_cost = 100;
         current_cost = 0;
         description = "no description";
         ArrayList<PieceCategory> categories = new ArrayList<PieceCategory>();
@@ -26,7 +24,6 @@ public class Power {
 
     public Power(String new_name) {
         name = new_name;
-        total_cost = 100;
         current_cost = 0;
         description = "no description";
         ArrayList<PieceCategory> categories = new ArrayList<PieceCategory>();
@@ -34,7 +31,6 @@ public class Power {
 
     public Power(String new_name, String new_description) {
         name = new_name;
-        total_cost = 100;
         current_cost = 0;
         description = new_description;
         ArrayList<PieceCategory> categories = new ArrayList<PieceCategory>();
@@ -59,14 +55,6 @@ public class Power {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getTotal_cost() {
-        return total_cost;
-    }
-
-    public void setTotal_cost(int total_cost) {
-        this.total_cost = total_cost;
     }
 
     public int getCurrent_cost() {
