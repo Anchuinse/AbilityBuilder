@@ -2,6 +2,7 @@ package com.creator.anchuinse.abilitybuilder;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
@@ -43,7 +44,8 @@ public class PowerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         //important one to change how things are viewed along with ViewHolder object
-        ((ViewHolder)holder).textView.setText(categories.get(position).getName());//set items and such to their place in the ViewHolder
+        ((ViewHolder)holder).textView.setText(categories.get(position).getName());
+
         if(categories.get(position) instanceof ComplexCategory) {
             ((ViewHolder)holder).selected.setText(categories.get(position).getSelected().getName());
         }
@@ -60,12 +62,27 @@ public class PowerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             }
         });
 
+        //-------
+
         if(position%2 == 1){
             holder.itemView.setBackgroundColor(Color.LTGRAY);
         }
         else{
             holder.itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.recycler_color1));
         }
+
+        //-------
+
+        ((ViewHolder)holder).parentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Toast.makeText(context, "nailed it",Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(context, CategoryActivity.class);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
