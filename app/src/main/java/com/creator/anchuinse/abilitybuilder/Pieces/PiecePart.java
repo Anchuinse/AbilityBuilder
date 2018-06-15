@@ -1,10 +1,13 @@
 package com.creator.anchuinse.abilitybuilder.Pieces;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Matt on 5/28/18.
  */
 
-public class PiecePart {
+public class PiecePart implements Parcelable{
 
     String name;
     int cost;
@@ -15,6 +18,28 @@ public class PiecePart {
     }
 
     //------
+
+    //start of Parcelable chunk
+
+    protected PiecePart(Parcel in) {
+        //needs to be the same order as writeToParcel
+        name = in.readString();
+        cost = in.readInt();
+    }
+
+    public static final Creator<PiecePart> CREATOR = new Creator<PiecePart>() {
+        @Override
+        public PiecePart createFromParcel(Parcel in) {
+            return new PiecePart(in);
+        }
+
+        @Override
+        public PiecePart[] newArray(int size) {
+            return new PiecePart[size];
+        }
+    };
+
+    //end of Parcelable chunk
 
     public static PiecePart emptyPart(){
         PiecePart empty_part = new PiecePart(" ", 0);
@@ -38,4 +63,20 @@ public class PiecePart {
     public void setCost(int cost) {
         this.cost = cost;
     }
+
+    //start of Parcelable chunk
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        //needs to be the same order as protected PiecePart(Parcel in)
+        parcel.writeString(name);
+        parcel.writeInt(cost);
+    }
+
+    //end of Parcelable chunk
 }

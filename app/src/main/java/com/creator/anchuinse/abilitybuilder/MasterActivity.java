@@ -17,14 +17,14 @@ public class MasterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_master);
 
-        Items.add("one");
-        Items.add("two");
-        Items.add("three");
-        Items.add("four");
-        Items.add("five");
-        Items.add("six");
-        Items.add("seven");
-        Items.add("eight");
+        Items.add("Powerset 1");
+        Items.add("Powerset 2");
+        Items.add("Powerset 3");
+        Items.add("Powerset 4");
+        Items.add("Powerset 5");
+        Items.add("Powerset 6");
+        Items.add("Powerset 7");
+        Items.add("Powerset 8");
 
         initiateRecyclerView();
     }

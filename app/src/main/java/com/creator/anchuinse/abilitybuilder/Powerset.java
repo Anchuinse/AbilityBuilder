@@ -1,5 +1,8 @@
 package com.creator.anchuinse.abilitybuilder;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.creator.anchuinse.abilitybuilder.PowerTypes.Power;
 
 import java.util.ArrayList;
@@ -8,7 +11,7 @@ import java.util.ArrayList;
  * Created by Matt on 5/30/18.
  */
 
-public class Powerset {
+public class Powerset implements Parcelable{
 
     String name;
     int total_cost;
@@ -22,6 +25,30 @@ public class Powerset {
         total_cost = new_total;
         description = "no description";
     }
+
+    //start of Parcelable chunk
+
+    protected Powerset(Parcel in) {
+        name = in.readString();
+        total_cost = in.readInt();
+        current_cost = in.readInt();
+        description = in.readString();
+        powers = in.createTypedArrayList(Power.CREATOR);
+    }
+
+    public static final Creator<Powerset> CREATOR = new Creator<Powerset>() {
+        @Override
+        public Powerset createFromParcel(Parcel in) {
+            return new Powerset(in);
+        }
+
+        @Override
+        public Powerset[] newArray(int size) {
+            return new Powerset[size];
+        }
+    };
+
+    //end of Parcelable chunk
 
     public String getName() {
         return name;
@@ -62,4 +89,22 @@ public class Powerset {
     public void setCurrent_cost(int current_cost) {
         this.current_cost = current_cost;
     }
+
+    //start of Parcelable chunk
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(name);
+        parcel.writeInt(total_cost);
+        parcel.writeInt(current_cost);
+        parcel.writeString(description);
+        parcel.writeTypedList(powers);
+    }
+
+    //end of Parcelable chunk
 }

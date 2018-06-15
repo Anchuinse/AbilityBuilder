@@ -1,5 +1,8 @@
 package com.creator.anchuinse.abilitybuilder.Pieces;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.creator.anchuinse.abilitybuilder.R;
 
 import java.util.ArrayList;
@@ -8,7 +11,7 @@ import java.util.ArrayList;
  * Created by Matt on 5/28/18.
  */
 
-public class Aspect {
+public class Aspect implements Parcelable{
     //never build Aspects with more than eight parts otherwise you'll have to change the code in AspectActivity and its layout
 
     String name;
@@ -33,6 +36,30 @@ public class Aspect {
     }
 
     //-----------
+
+    //start of Parcelable chunk
+
+    protected Aspect(Parcel in) {
+        //same order as writeToParcel
+        name = in.readString();
+        description = in.readString();
+        selected = in.readParcelable(PiecePart.class.getClassLoader());
+        piece_parts = in.createTypedArrayList(PiecePart.CREATOR);
+    }
+
+    public static final Creator<Aspect> CREATOR = new Creator<Aspect>() {
+        @Override
+        public Aspect createFromParcel(Parcel in) {
+            return new Aspect(in);
+        }
+
+        @Override
+        public Aspect[] newArray(int size) {
+            return new Aspect[size];
+        }
+    };
+
+    //end of Parcelable chunk
 
     public static Aspect Physical_Use_Time(){
         ArrayList<PiecePart> parts = new ArrayList<PiecePart>();
@@ -191,4 +218,22 @@ public class Aspect {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    //start of Parcelable chunk
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        //same order as protected ...
+        parcel.writeString(name);
+        parcel.writeString(description);
+        parcel.writeParcelable(selected, i);
+        parcel.writeTypedList(piece_parts);
+    }
+
+    //end of Parcelable chunk
 }

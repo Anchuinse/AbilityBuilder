@@ -1,12 +1,15 @@
 package com.creator.anchuinse.abilitybuilder.Pieces;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
 /**
  * Created by Matt on 5/28/18.
  */
 
-public class ComplexAspect extends Aspect {
+public class ComplexAspect extends Aspect implements Parcelable{
 
     ArrayList<Aspect> simpler_pieces = new ArrayList<Aspect>();
 
@@ -24,6 +27,38 @@ public class ComplexAspect extends Aspect {
     }
 
     //---------
+
+    //start of Parcelable chunk
+
+    protected ComplexAspect(Parcel in) {
+        super(in);
+        simpler_pieces = in.createTypedArrayList(Aspect.CREATOR);
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeTypedList(simpler_pieces);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<ComplexAspect> CREATOR = new Creator<ComplexAspect>() {
+        @Override
+        public ComplexAspect createFromParcel(Parcel in) {
+            return new ComplexAspect(in);
+        }
+
+        @Override
+        public ComplexAspect[] newArray(int size) {
+            return new ComplexAspect[size];
+        }
+    };
+
+    //end of Parcelable chunk
 
     public static ComplexAspect Physical_Effected_Target(){
         ComplexAspect effected_target = new ComplexAspect("Effected Target");
