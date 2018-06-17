@@ -3,8 +3,6 @@ package com.creator.anchuinse.abilitybuilder.Pieces;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.creator.anchuinse.abilitybuilder.R;
-
 import java.util.ArrayList;
 
 /**
@@ -70,7 +68,7 @@ public class Aspect implements Parcelable{
         Aspect time = new Aspect("Use Time");
         time.setDescription("This aspect describes how fast the user can use the ability. The shorter the use time, the more expensive it is.");
         time.setPiece_parts(parts);
-        time.setCheapest();
+        time.setCheapestAsSelected();
         return time;
     }
 
@@ -79,12 +77,12 @@ public class Aspect implements Parcelable{
         parts.add(new PiecePart("Touch/Self",1));
         parts.add(new PiecePart("Short",2));
         parts.add(new PiecePart("Medium",3));
-        parts.add(new PiecePart("Long",4));
+        parts.add(new PiecePart("Far",4));
 
         Aspect range = new Aspect("Range");
         range.setDescription("Pretty straight forward. This aspect denotes the range of the ability.");
         range.setPiece_parts(parts);
-        range.setCheapest();
+        range.setCheapestAsSelected();
         return range;
     }
 
@@ -98,7 +96,7 @@ public class Aspect implements Parcelable{
         Aspect duration = new Aspect("Duration");
         duration.setDescription("This aspect denotes how long the effect lasts after the ability is used.");
         duration.setPiece_parts(parts);
-        duration.setCheapest();
+        duration.setCheapestAsSelected();
         return duration;
     }
 
@@ -112,7 +110,7 @@ public class Aspect implements Parcelable{
         Aspect activation = new Aspect("Delay Time");
         activation.setDescription("This aspect denotes how long after the ability is used that it actually takes effect.");
         activation.setPiece_parts(parts);
-        activation.setCheapest();
+        activation.setCheapestAsSelected();
         return activation;
     }
 
@@ -127,7 +125,7 @@ public class Aspect implements Parcelable{
         Aspect target = new Aspect("Target Type");
         target.setDescription("This aspect describes what kinds of things can be targeted or effected by this ability.");
         target.setPiece_parts(parts);
-        target.setCheapest();
+        target.setCheapestAsSelected();
         return target;
     }
 
@@ -140,7 +138,7 @@ public class Aspect implements Parcelable{
         Aspect area = new Aspect("Shape of Effect");
         area.setDescription("This aspect describes the shape of the area of effect.");
         area.setPiece_parts(parts);
-        area.setCheapest();
+        area.setCheapestAsSelected();
         return area;
     }
 
@@ -156,7 +154,7 @@ public class Aspect implements Parcelable{
         strength.setDescription("This aspect describes how easy (or difficult) the ability is to resist. The weaker the ability's strength " +
                 "the easier it is to resist it's effects. Having an ability with Impossible strength means the power cannot be resisted.");
         strength.setPiece_parts(parts);
-        strength.setCheapest();
+        strength.setCheapestAsSelected();
         return strength;
     }
 
@@ -169,7 +167,7 @@ public class Aspect implements Parcelable{
         Aspect resisting = new Aspect("Ability Strength");
         resisting.setDescription("This aspect describes what happens when the power is resisted successfully.");
         resisting.setPiece_parts(parts);
-        resisting.setCheapest();
+        resisting.setCheapestAsSelected();
         return resisting;
     }
 
@@ -199,7 +197,7 @@ public class Aspect implements Parcelable{
         this.piece_parts = piece_parts;
     }
 
-    public void setCheapest(){
+    public void setCheapestAsSelected(){
         ArrayList<PiecePart> items = this.getPiece_parts();
         PiecePart cheapest = items.get(0);
         for (int i = 0; i < items.size(); i++){
@@ -218,6 +216,7 @@ public class Aspect implements Parcelable{
     public void setDescription(String description) {
         this.description = description;
     }
+
 
     //start of Parcelable chunk
 

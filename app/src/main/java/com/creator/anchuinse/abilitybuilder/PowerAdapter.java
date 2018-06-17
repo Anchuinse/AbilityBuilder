@@ -22,14 +22,14 @@ import java.util.ArrayList;
  */
 
 public class PowerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    //adapter to hold all the categories of a single power
+    //adapter to hold all the aspects of a single power
 
     Context context;
-    ArrayList<Aspect> categories;
+    ArrayList<Aspect> aspects;
 
-    public PowerAdapter(Context context, ArrayList<Aspect> categories){
+    public PowerAdapter(Context context, ArrayList<Aspect> aspects){
         this.context = context;
-        this.categories = categories;
+        this.aspects = aspects;
     }
 
     @Override
@@ -43,23 +43,15 @@ public class PowerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         //important one to change how things are viewed along with ViewHolder object
-        ((ViewHolder)holder).textView.setText(categories.get(position).getName());
+        ((ViewHolder)holder).textView.setText(aspects.get(position).getName());
 
-        if(categories.get(position) instanceof ComplexAspect) {
-            ((ViewHolder)holder).selected.setText(categories.get(position).getSelected().getName());
+        if(aspects.get(position) instanceof ComplexAspect) {
+            ((ViewHolder)holder).selected.setText(aspects.get(position).getSelected().getName());
         }
         else {
-            ((ViewHolder)holder).selected.setText(categories.get(position).getSelected().getName() + ":");
+            ((ViewHolder)holder).selected.setText(aspects.get(position).getSelected().getName() + ":");
         }
-        ((ViewHolder)holder).cost.setText(String.valueOf(categories.get(position).getSelected().getCost()));
-
-        ((ViewHolder) holder).parentLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //use this to change what happens when things are clicked
-                Toast.makeText(context, categories.get(position).getName(),Toast.LENGTH_SHORT).show();
-            }
-        });
+        ((ViewHolder)holder).cost.setText(String.valueOf(aspects.get(position).getSelected().getCost()));
 
         //----------
 
@@ -75,10 +67,9 @@ public class PowerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         ((ViewHolder)holder).parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Toast.makeText(context, "nailed it",Toast.LENGTH_SHORT).show();
-
+                //use this to make changes, possible redundant version of this deleted from above
                 Intent intent = new Intent(context, AspectActivity.class);
+                intent.putExtra("aspect",aspects.get(position));
                 context.startActivity(intent);
             }
         });
@@ -86,7 +77,7 @@ public class PowerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return categories.size();
+        return aspects.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

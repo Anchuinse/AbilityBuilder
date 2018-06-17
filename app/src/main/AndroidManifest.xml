@@ -9,16 +9,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MasterActivity">
+        <activity android:name=".MasterActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PowersetActivity" />
-        <activity android:name=".PowerActivity" />
-        <activity android:name=".AspectActivity" />
+        <activity android:name=".PowersetActivity"
+            android:launchMode="singleTask"/>
+        <activity android:name=".PowerActivity"
+            android:launchMode="singleTask"/>
+        <activity android:name=".AspectActivity"
+            android:launchMode="singleTask"/>
     </application>
 
 </manifest>

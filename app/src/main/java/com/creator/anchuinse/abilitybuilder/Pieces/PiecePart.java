@@ -17,9 +17,14 @@ public class PiecePart implements Parcelable{
         cost = new_cost;
     }
 
-    //------
+    public static PiecePart emptyPart(){
+        PiecePart empty_part = new PiecePart(" ", 0);
+        return empty_part;
+    }
+
 
     //start of Parcelable chunk
+
 
     protected PiecePart(Parcel in) {
         //needs to be the same order as writeToParcel
@@ -39,14 +44,9 @@ public class PiecePart implements Parcelable{
         }
     };
 
+
     //end of Parcelable chunk
 
-    public static PiecePart emptyPart(){
-        PiecePart empty_part = new PiecePart(" ", 0);
-        return empty_part;
-    }
-
-    //------
 
     public String getName() {
         return name;

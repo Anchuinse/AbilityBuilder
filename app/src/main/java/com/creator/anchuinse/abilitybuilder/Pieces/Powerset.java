@@ -1,8 +1,9 @@
-package com.creator.anchuinse.abilitybuilder;
+package com.creator.anchuinse.abilitybuilder.Pieces;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.creator.anchuinse.abilitybuilder.PowerTypes.PhysicalPower;
 import com.creator.anchuinse.abilitybuilder.PowerTypes.Power;
 
 import java.util.ArrayList;
@@ -23,7 +24,14 @@ public class Powerset implements Parcelable{
 
         name = new_name;
         total_cost = new_total;
+        current_cost = 0;
         description = "no description";
+    }
+
+    public static Powerset examplePowerset(){
+        Powerset examplePowerset = new Powerset("example",100);
+        examplePowerset.getPowers().add(new PhysicalPower("Physical Example"));
+        return examplePowerset;
     }
 
     //start of Parcelable chunk

@@ -16,7 +16,7 @@ public class Power implements Parcelable{
     String name;
     int current_cost;
     String description;
-    ArrayList<Aspect> categories = new ArrayList<Aspect>();
+    ArrayList<Aspect> aspects = new ArrayList<Aspect>();
 
     public Power(){
         name = "no name";
@@ -47,7 +47,7 @@ public class Power implements Parcelable{
         name = in.readString();
         current_cost = in.readInt();
         description = in.readString();
-        categories = in.createTypedArrayList(Aspect.CREATOR);
+        aspects = in.createTypedArrayList(Aspect.CREATOR);
     }
 
     public static final Creator<Power> CREATOR = new Creator<Power>() {
@@ -67,8 +67,8 @@ public class Power implements Parcelable{
     public void refreshCurrentCost(){
 
         int piece_total = 0;
-        for (int i = 0; i < categories.size(); i++) {
-            piece_total = piece_total + getCategories().get(i).getSelected().getCost();
+        for (int i = 0; i < aspects.size(); i++) {
+            piece_total = piece_total + getAspects().get(i).getSelected().getCost();
         }
         setCurrent_cost(piece_total);
     }
@@ -99,12 +99,12 @@ public class Power implements Parcelable{
         this.description = description;
     }
 
-    public ArrayList<Aspect> getCategories() {
-        return categories;
+    public ArrayList<Aspect> getAspects() {
+        return aspects;
     }
 
-    public void setCategories(ArrayList<Aspect> categories) {
-        this.categories = categories;
+    public void setAspects(ArrayList<Aspect> categories) {
+        this.aspects = categories;
     }
 
     //start of Parcelable chunk
@@ -119,7 +119,7 @@ public class Power implements Parcelable{
         parcel.writeString(name);
         parcel.writeInt(current_cost);
         parcel.writeString(description);
-        parcel.writeTypedList(categories);
+        parcel.writeTypedList(aspects);
     }
 
     //end of Parcelable chunk

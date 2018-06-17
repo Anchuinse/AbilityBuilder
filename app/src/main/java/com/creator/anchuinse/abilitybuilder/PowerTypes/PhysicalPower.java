@@ -16,23 +16,23 @@ public class PhysicalPower extends Power implements Parcelable{
 
     public PhysicalPower(){
         super();
-        categories.add(Aspect.Physical_Delay_Time());
-        categories.add(Aspect.Physical_Duration());
-        categories.add(ComplexAspect.Physical_Effected_Target());
-        categories.add(Aspect.Physical_Range());
-        categories.add(ComplexAspect.Physical_Resistance());
-        categories.add(Aspect.Physical_Use_Time());
+        aspects.add(Aspect.Physical_Delay_Time());
+        aspects.add(Aspect.Physical_Duration());
+        aspects.add(ComplexAspect.Physical_Effected_Target());
+        aspects.add(Aspect.Physical_Range());
+        aspects.add(ComplexAspect.Physical_Resistance());
+        aspects.add(Aspect.Physical_Use_Time());
         this.refreshCurrentCost();
     }
 
     public PhysicalPower(String new_name){
         super(new_name);
-        categories.add(Aspect.Physical_Delay_Time());
-        categories.add(Aspect.Physical_Duration());
-        categories.add(ComplexAspect.Physical_Effected_Target());
-        categories.add(Aspect.Physical_Range());
-        categories.add(ComplexAspect.Physical_Resistance());
-        categories.add(Aspect.Physical_Use_Time());
+        aspects.add(Aspect.Physical_Delay_Time());
+        aspects.add(Aspect.Physical_Duration());
+        aspects.add(ComplexAspect.Physical_Effected_Target());
+        aspects.add(Aspect.Physical_Range());
+        aspects.add(ComplexAspect.Physical_Resistance());
+        aspects.add(Aspect.Physical_Use_Time());
         this.refreshCurrentCost();
     }
 
@@ -66,8 +66,8 @@ public class PhysicalPower extends Power implements Parcelable{
 
     //end of Parcelable chunk
 
-    public ArrayList<Aspect> getCategories() {
-        return categories;
+    public ArrayList<Aspect> getAspects() {
+        return aspects;
     }
 
 }
