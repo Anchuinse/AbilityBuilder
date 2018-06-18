@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +14,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.creator.anchuinse.abilitybuilder.Pieces.MasterData;
+import com.creator.anchuinse.abilitybuilder.Pieces.Powerset;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -23,11 +28,11 @@ public class MasterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     //adapter to hold all the powersets of a single user
 
     Context context;
-    ArrayList<String> items;
+    ArrayList<Powerset> powersets;
 
-    public MasterAdapter(Context context, ArrayList<String> items){
+    public MasterAdapter(Context context, ArrayList<Powerset> powersets){
         this.context = context;
-        this.items = items;
+        this.powersets = powersets;
     }
 
     @Override
@@ -41,16 +46,19 @@ public class MasterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
                                                                                                     //important one to change how things are viewed along with ViewHolder object
-        ((ViewHolder)holder).textView.setText(items.get(position));                                 //set items and such to their place in the ViewHolder
+        ((ViewHolder)holder).textView.setText(powersets.get(position).getName());                                 //set items and such to their place in the ViewHolder
 
         ((ViewHolder) holder).parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //use this to change what happens when things are clicked
-                Toast.makeText(context, items.get(position),Toast.LENGTH_SHORT).show();
 
+                //MODIFY THIS PLACE AFTER PERSISTENCE
                 Intent intent = new Intent(context, PowersetActivity.class);
-                intent.putExtra("powerset_name", items.get(position));                        //attach extra stuff to the intent to specify which item we clicked
+                Bundle extras = new Bundle();
+                extras.putParcelable("powerset", powersets.get(position));                        //attach extra stuff to the intent to specify which item we clicked
+                //extras.putParcelable("master",master);
+                intent.putExtras(extras);
                 context.startActivity(intent);
             }
         });
@@ -65,7 +73,7 @@ public class MasterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return powersets.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
