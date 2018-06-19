@@ -1,6 +1,5 @@
 package com.creator.anchuinse.abilitybuilder;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,9 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.creator.anchuinse.abilitybuilder.Pieces.MasterData;
 import com.creator.anchuinse.abilitybuilder.Pieces.Powerset;
-import com.creator.anchuinse.abilitybuilder.PowerTypes.PhysicalPower;
 import com.creator.anchuinse.abilitybuilder.PowerTypes.Power;
 
 import java.util.ArrayList;
@@ -52,7 +49,7 @@ public class PowersetActivity extends AppCompatActivity {
         Powerset sent = extras.getParcelable("powerset");
 
         if(extras.containsKey("powerset")){
-            Toast.makeText(this, "powerset", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "powerset", Toast.LENGTH_SHORT).show();
             powers.addAll(sent.getPowers());
             setDescription(sent.getDescription());
         }
