@@ -2,6 +2,7 @@ package com.creator.anchuinse.abilitybuilder;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -10,7 +11,11 @@ import android.widget.Toast;
 
 import com.creator.anchuinse.abilitybuilder.Pieces.Aspect;
 import com.creator.anchuinse.abilitybuilder.Pieces.PiecePart;
+import com.creator.anchuinse.abilitybuilder.Pieces.Powerset;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 /**
@@ -18,6 +23,12 @@ import java.util.ArrayList;
  */
 
 public class AspectActivity extends AppCompatActivity {
+
+    SharedPreferences data;
+    ArrayList<Powerset> powersets = new ArrayList<Powerset>();
+    int powerset_number;
+    int power_number;
+    int aspect_number;
 
     ArrayList<PiecePart> pieces = new ArrayList<PiecePart>();
     ArrayList<Button> buttons = new ArrayList<Button>();
@@ -29,6 +40,8 @@ public class AspectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aspect);
         context = getApplicationContext();
+
+        loadData();
 
         getIncomingIntent();
 
@@ -51,10 +64,6 @@ public class AspectActivity extends AppCompatActivity {
         buttons.add(seven);
         final Button eight = findViewById(R.id.button8);
         buttons.add(eight);
-
-        //--------
-
-        setButtons();
 
         //--------
 
@@ -219,6 +228,25 @@ public class AspectActivity extends AppCompatActivity {
                 context.startActivity(intent);
             }
         });
+
+        setButtons();
+    }
+
+    private void saveData(){
+        data = getSharedPreferences("data",MODE_PRIVATE);
+        SharedPreferences.Editor editor = data.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(powersets);
+        editor.putString("data",json);
+        editor.apply();
+    }
+
+    private void loadData(){
+        data = getSharedPreferences("data",MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = data.getString("data",null);
+        Type type = new TypeToken<ArrayList<Powerset>>() {}.getType();
+        powersets = gson.fromJson(json,type);
     }
 
     private void setButtons(){
@@ -238,18 +266,21 @@ public class AspectActivity extends AppCompatActivity {
 
     private void getIncomingIntent() {
 
-        if(getIntent().hasExtra("aspect")){
-            displayed_aspect = getIntent().getParcelableExtra("aspect");
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
 
-            for (int i = 0; i < displayed_aspect.getPiece_parts().size(); i++){
-                pieces.add(displayed_aspect.getPiece_parts().get(i));
-            }
-        }
-        else{
-            Aspect example = Aspect.Physical_Delay_Time();
+        assert extras != null;
 
-            for (int i = 0; i < example.getPiece_parts().size(); i++){
-                pieces.add(example.getPiece_parts().get(i));
+        if(extras.containsKey("powerset_number")) {
+            powerset_number = extras.getInt("powerset_number");
+            if (extras.containsKey("power_number")) {
+                power_number = extras.getInt("power_number");
+                if (extras.containsKey("aspect_number")) {
+                    aspect_number = extras.getInt("aspect_number");
+
+                    displayed_aspect = powersets.get(powerset_number).getPowers().get(power_number).getAspects().get(aspect_number);
+                    pieces = displayed_aspect.getPiece_parts();
+                }
             }
         }
     }

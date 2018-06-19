@@ -1,6 +1,7 @@
 package com.creator.anchuinse.abilitybuilder;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,7 +11,10 @@ import android.widget.Toast;
 
 import com.creator.anchuinse.abilitybuilder.Pieces.Powerset;
 import com.creator.anchuinse.abilitybuilder.PowerTypes.Power;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 /**
@@ -20,23 +24,59 @@ import java.util.ArrayList;
 public class PowersetActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;                                             //make sure to initiate lists used in RecyclerView right away
+    ArrayList<Powerset> powersets = new ArrayList<Powerset>();
+    int powerset_number;
     ArrayList<Power> powers = new ArrayList<Power>();
+    SharedPreferences data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_powerset);
+        loadData();
 
         getIncomingIntent();
 
         initiateRecyclerView();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadData();
+        resetRecyclerView();
+    }
+
+    private void saveData(){
+        data = getSharedPreferences("data",MODE_PRIVATE);
+        SharedPreferences.Editor editor = data.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(powersets);
+        editor.putString("data",json);
+        editor.apply();
+    }
+
+    private void loadData(){
+        data = getSharedPreferences("data",MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = data.getString("data",null);
+        Type type = new TypeToken<ArrayList<Powerset>>() {}.getType();
+        powersets = gson.fromJson(json,type);
+    }
+
     private void initiateRecyclerView() {
 
         recyclerView = (RecyclerView) findViewById(R.id.powerset_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new PowersetAdapter(this,powers));                           //passes the Items to the adapter specified (Make sure it's the right one)
+        recyclerView.setAdapter(new PowersetAdapter(this, powerset_number, powers));                           //passes the Items to the adapter specified (Make sure it's the right one)
+    }
+
+    private void resetRecyclerView() {
+        recyclerView.setLayoutManager(null);
+        recyclerView.setAdapter(null);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(new PowersetAdapter(this,powerset_number, powers));
+        recyclerView.getAdapter().notifyDataSetChanged();
     }
 
     private void getIncomingIntent(){
@@ -44,14 +84,13 @@ public class PowersetActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
 
-        //MODIFY THIS PLACE AFTER PERSISTENCE
         assert extras != null;
-        Powerset sent = extras.getParcelable("powerset");
 
-        if(extras.containsKey("powerset")){
+        if(extras.containsKey("powerset_number")){
             //Toast.makeText(this, "powerset", Toast.LENGTH_SHORT).show();
-            powers.addAll(sent.getPowers());
-            setDescription(sent.getDescription());
+            powerset_number = extras.getInt("powerset_number");
+            powers.addAll(powersets.get(powerset_number).getPowers());
+            setDescription(powersets.get(powerset_number).getDescription());
         }
 
     }

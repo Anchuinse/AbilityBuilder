@@ -40,7 +40,7 @@ public class MasterActivity extends AppCompatActivity {
         resetRecyclerView();
     }
 
-    public void saveData(){
+    private void saveData(){
         data = getSharedPreferences("data",MODE_PRIVATE);
         SharedPreferences.Editor editor = data.edit();
         Gson gson = new Gson();
@@ -49,7 +49,7 @@ public class MasterActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    public void loadData(){
+    private void loadData(){
         data = getSharedPreferences("data",MODE_PRIVATE);
         Gson gson = new Gson();
         String json = data.getString("data",null);

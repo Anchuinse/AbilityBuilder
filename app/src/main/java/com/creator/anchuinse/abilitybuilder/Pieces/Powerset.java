@@ -98,6 +98,14 @@ public class Powerset implements Parcelable{
         this.current_cost = current_cost;
     }
 
+    public void overwritePowersetWith(Powerset new_powerset){
+        this.name = new_powerset.getName();
+        this.total_cost = new_powerset.getTotal_cost();
+        this.current_cost = new_powerset.getCurrent_cost();
+        this.description = new_powerset.getDescription();
+        this.powers = new_powerset.getPowers();
+    }
+
     //start of Parcelable chunk
 
     @Override

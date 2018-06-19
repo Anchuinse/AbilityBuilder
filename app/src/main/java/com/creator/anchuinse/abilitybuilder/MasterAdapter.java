@@ -52,7 +52,7 @@ public class MasterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 //MODIFY THIS PLACE AFTER PERSISTENCE
                 Intent intent = new Intent(context, PowersetActivity.class);
                 Bundle extras = new Bundle();
-                extras.putParcelable("powerset", powersets.get(position));                        //attach extra stuff to the intent to specify which item we clicked
+                extras.putInt("powerset_number", position);                        //attach extra stuff to the intent to specify which item we clicked
                 //extras.putParcelable("master",master);
                 intent.putExtras(extras);
                 context.startActivity(intent);

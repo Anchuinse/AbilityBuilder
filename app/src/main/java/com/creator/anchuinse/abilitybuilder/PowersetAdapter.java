@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.creator.anchuinse.abilitybuilder.Pieces.Powerset;
 import com.creator.anchuinse.abilitybuilder.PowerTypes.Power;
 
 import java.util.ArrayList;
@@ -24,11 +26,14 @@ import java.util.ArrayList;
 public class PowersetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     //adapter to hold all the powers of a single powerset
 
+    int powerset_number;
+
     Context context;
     ArrayList<Power> powers;
 
-    public PowersetAdapter(Context context, ArrayList<Power> powers){
+    public PowersetAdapter(Context context, int powerset_number, ArrayList<Power> powers){
         this.context = context;
+        this.powerset_number = powerset_number;
         this.powers = powers;
     }
 
@@ -49,11 +54,12 @@ public class PowersetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             @Override
             public void onClick(View view) {
                 //use this to change what happens when things are clicked
-                Toast.makeText(context, powers.get(position).getName(),Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(context, PowerActivity.class);
-                intent.putExtra("power_name", powers.get(position).getName());                        //attach extra stuff to the intent to specify which item we clicked
-                intent.putExtra("power_cost",powers.get(position).getCurrent_cost());
+                Bundle extras = new Bundle();
+                extras.putInt("powerset_number",powerset_number);
+                extras.putInt("power_number",position);
+                intent.putExtras(extras);
                 context.startActivity(intent);
             }
         });

@@ -3,6 +3,7 @@ package com.creator.anchuinse.abilitybuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -24,11 +25,16 @@ import java.util.ArrayList;
 public class PowerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     //adapter to hold all the aspects of a single power
 
+    int powerset_number;
+    int power_number;
+
     Context context;
     ArrayList<Aspect> aspects;
 
-    public PowerAdapter(Context context, ArrayList<Aspect> aspects){
+    public PowerAdapter(Context context, int powerset_number, int power_number, ArrayList<Aspect> aspects){
         this.context = context;
+        this.powerset_number = powerset_number;
+        this.power_number = power_number;
         this.aspects = aspects;
     }
 
@@ -69,7 +75,11 @@ public class PowerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             public void onClick(View view) {
                 //use this to make changes, possible redundant version of this deleted from above
                 Intent intent = new Intent(context, AspectActivity.class);
-                intent.putExtra("aspect",aspects.get(position));
+                Bundle extras = new Bundle();
+                extras.putInt("powerset_number",powerset_number);
+                extras.putInt("power_number",power_number);
+                extras.putInt("aspect_number",position);
+                intent.putExtras(extras);
                 context.startActivity(intent);
             }
         });

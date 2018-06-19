@@ -107,6 +107,13 @@ public class Power implements Parcelable{
         this.aspects = categories;
     }
 
+    public void overwritePowerWith(Power new_power){
+        this.name = new_power.getName();
+        this.current_cost = new_power.getCurrent_cost();
+        this.description = new_power.getDescription();
+        this.aspects = new_power.getAspects();
+    }
+
     //start of Parcelable chunk
 
     @Override
