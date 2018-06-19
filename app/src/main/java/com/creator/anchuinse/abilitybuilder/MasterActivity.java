@@ -1,10 +1,12 @@
 package com.creator.anchuinse.abilitybuilder;
 
 import android.content.SharedPreferences;
+import android.support.v4.app.ShareCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import com.creator.anchuinse.abilitybuilder.Pieces.Powerset;
 import com.google.gson.Gson;
@@ -17,6 +19,7 @@ public class MasterActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     ArrayList<Powerset> powersets;                                              //make sure to initiate lists used in RecyclerView right away
+    SharedPreferences data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,12 +27,21 @@ public class MasterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_master);
 
         loadData();
+        saveData(); //make into a button later
 
         initiateRecyclerView();
     }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+        loadData();
+        saveData();
+        resetRecyclerView();
+    }
+
     public void saveData(){
-        SharedPreferences data = getSharedPreferences("data",MODE_PRIVATE);
+        data = getSharedPreferences("data",MODE_PRIVATE);
         SharedPreferences.Editor editor = data.edit();
         Gson gson = new Gson();
         String json = gson.toJson(powersets);
@@ -38,7 +50,7 @@ public class MasterActivity extends AppCompatActivity {
     }
 
     public void loadData(){
-        SharedPreferences data = getSharedPreferences("data",MODE_PRIVATE);
+        data = getSharedPreferences("data",MODE_PRIVATE);
         Gson gson = new Gson();
         String json = data.getString("data",null);
         Type type = new TypeToken<ArrayList<Powerset>>() {}.getType();
@@ -47,6 +59,7 @@ public class MasterActivity extends AppCompatActivity {
         if (powersets == null) {
             powersets = new ArrayList<Powerset>();
             powersets.add(Powerset.examplePowerset());
+            Toast.makeText(this, "generating examples", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -54,5 +67,13 @@ public class MasterActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.master_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new MasterAdapter(this,powersets));                           //passes the Items to the adapter
+    }
+
+    private void resetRecyclerView() {
+        recyclerView.setLayoutManager(null);
+        recyclerView.setAdapter(null);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(new MasterAdapter(this,powersets));
+        recyclerView.getAdapter().notifyDataSetChanged();
     }
 }
