@@ -6,8 +6,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.creator.anchuinse.abilitybuilder.Pieces.Aspect;
 import com.creator.anchuinse.abilitybuilder.Pieces.Powerset;
@@ -38,13 +43,10 @@ public class PowerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_power);
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         loadData();
-
-        /*example = new PhysicalPower();
-
-        for (int i = 0; i < example.getAspects().size(); i++){
-            aspects.add(example.getAspects().get(i));
-        }*/
 
         processIntent();
 
@@ -69,6 +71,24 @@ public class PowerActivity extends AppCompatActivity {
         current_power.refreshCurrentCost();
         getWindow().getDecorView().findViewById(R.id.power_cost).invalidate();
         setCurrentCost(current_power.getCurrent_cost());
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.power_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.power_help:
+                Toast.makeText(this, "power help clicked", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void saveData(){
