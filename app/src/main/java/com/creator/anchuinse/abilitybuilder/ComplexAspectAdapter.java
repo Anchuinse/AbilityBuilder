@@ -29,14 +29,14 @@ public class ComplexAspectAdapter extends RecyclerView.Adapter<RecyclerView.View
     int aspect_number;
 
     Context context;
-    ArrayList<Aspect> aspects;
+    ArrayList<Aspect> sub_aspects;
 
-    public ComplexAspectAdapter(Context context, int powerset_number, int power_number, int aspect_number, ArrayList<Aspect> simpleAspects){
+    public ComplexAspectAdapter(Context context, int powerset_number, int power_number, int aspect_number, ArrayList<Aspect> aspects){
         this.context = context;
         this.powerset_number = powerset_number;
         this.power_number = power_number;
         this.aspect_number = aspect_number;
-        this.aspects = simpleAspects;
+        this.sub_aspects = aspects;
     }
 
     @Override
@@ -50,7 +50,7 @@ public class ComplexAspectAdapter extends RecyclerView.Adapter<RecyclerView.View
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         //important one to change how things are viewed along with ViewHolder object
-        ((ViewHolder)holder).textView.setText(aspects.get(position).getName());
+        ((ViewHolder)holder).textView.setText(sub_aspects.get(position).getName());
 
         //----------
 
@@ -69,9 +69,7 @@ public class ComplexAspectAdapter extends RecyclerView.Adapter<RecyclerView.View
                 //use this to make changes, possible redundant version of this deleted from above
                 Intent intent = new Intent(context, AspectActivity.class);
                 Bundle extras = new Bundle();
-                extras.putInt("powerset_number",powerset_number);
-                extras.putInt("power_number",power_number);
-                extras.putInt("aspect_number",position);
+                //fill later
                 intent.putExtras(extras);
                 context.startActivity(intent);
             }
@@ -80,7 +78,7 @@ public class ComplexAspectAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     @Override
     public int getItemCount() {
-        return aspects.size();
+        return sub_aspects.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

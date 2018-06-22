@@ -5,17 +5,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.creator.anchuinse.abilitybuilder.Pieces.Aspect;
-import com.creator.anchuinse.abilitybuilder.Pieces.PiecePart;
 import com.creator.anchuinse.abilitybuilder.Pieces.Powerset;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -35,9 +33,9 @@ public class ComplexAspectActivity extends AppCompatActivity {
     int power_number;
     int aspect_number;
 
-    ArrayList<PiecePart> pieces = new ArrayList<PiecePart>();
-    ArrayList<Button> buttons = new ArrayList<Button>();
-    Aspect displayed_aspect = new Aspect("example");
+    ArrayList<Aspect> sub_aspects = new ArrayList<Aspect>();
+    RecyclerView recyclerView;
+    Aspect displayed_aspect;
     Context context;
 
     @Override
@@ -51,11 +49,11 @@ public class ComplexAspectActivity extends AppCompatActivity {
 
         loadData();
 
-        getIncomingIntent();
+        processIntent();
 
         getSupportActionBar().setTitle(displayed_aspect.getName());
 
-        //--------
+        initiateRecyclerView();
     }
 
     @Override
@@ -93,22 +91,7 @@ public class ComplexAspectActivity extends AppCompatActivity {
         powersets = gson.fromJson(json,type);
     }
 
-    private void setButtons(){
-        for (int i = 0; i < buttons.size(); i++) {
-            if (i < pieces.size()) {
-                buttons.get(i).setVisibility(View.VISIBLE);
-                buttons.get(i).setText(pieces.get(i).getName() + ": " + Integer.toString(pieces.get(i).getCost()));
-                if (displayed_aspect.getPiece_parts().get(i).getName().equals(displayed_aspect.getSelected().getName())){
-                    buttons.get(i).setEnabled(false);
-                }
-            }
-            else {
-                buttons.get(i).setVisibility(View.INVISIBLE);
-            }
-        }
-    }
-
-    private void getIncomingIntent() {
+    private void processIntent() {
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
@@ -121,12 +104,16 @@ public class ComplexAspectActivity extends AppCompatActivity {
                 power_number = extras.getInt("power_number");
                 if (extras.containsKey("aspect_number")) {
                     aspect_number = extras.getInt("aspect_number");
-
                     displayed_aspect = powersets.get(powerset_number).getPowers().get(power_number).getAspects().get(aspect_number);
-                    pieces = displayed_aspect.getPiece_parts();
+                    sub_aspects = displayed_aspect.getSubAspects();
                 }
             }
         }
     }
 
+    private void initiateRecyclerView() {
+        recyclerView = (RecyclerView) findViewById(R.id.complex_recyclerview);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(new PowerAdapter(this, powerset_number, power_number, sub_aspects));                           //passes the Items to the adapter
+    }
 }

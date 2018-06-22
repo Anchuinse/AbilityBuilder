@@ -2,6 +2,7 @@ package com.creator.anchuinse.abilitybuilder.Pieces;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -11,27 +12,11 @@ import java.util.ArrayList;
 
 public class ComplexAspect extends Aspect implements Parcelable{
 
-    ArrayList<Aspect> sub_aspects = new ArrayList<Aspect>();
-
     public ComplexAspect(String new_name) {
         super(new_name);
         selected = PiecePart.emptyPart();
         setComplex(true);
     }
-
-    public ComplexAspect(String new_name, ArrayList<PiecePart> parts_list) {
-        super(new_name, parts_list);
-        refreshCost();
-        setComplex(true);
-    }
-
-    public ComplexAspect(String new_name, ArrayList<PiecePart> parts_list, PiecePart new_selected) {
-        super(new_name, parts_list, new_selected);
-        refreshCost();
-        setComplex(true);
-    }
-
-
 
     //---------
 
@@ -39,27 +24,16 @@ public class ComplexAspect extends Aspect implements Parcelable{
 
     protected ComplexAspect(Parcel in) {
         super(in);
-        sub_aspects = in.createTypedArrayList(Aspect.CREATOR);
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeTypedList(sub_aspects);
     }
 
     @Override
     public int describeContents() {
         return 0;
-    }
-
-    public void refreshCost(){
-
-        int piece_total = 0;
-        for (int i = 0; i < sub_aspects.size(); i++) {
-            piece_total = piece_total + getSubAspects().get(i).getSelected().getCost();
-        }
-        setCost(piece_total);
     }
 
     public static final Creator<ComplexAspect> CREATOR = new Creator<ComplexAspect>() {
@@ -95,17 +69,4 @@ public class ComplexAspect extends Aspect implements Parcelable{
     }
 
     //---------
-
-    public ArrayList<Aspect> getSubAspects() {
-        return sub_aspects;
-    }
-
-    public void setSub_aspects(ArrayList<Aspect> sub_aspects) {
-        this.sub_aspects = sub_aspects;
-    }
-
-    public void addPiece(Aspect simple_piece){
-        getSubAspects().add(simple_piece);
-        refreshCost();
-    }
 }

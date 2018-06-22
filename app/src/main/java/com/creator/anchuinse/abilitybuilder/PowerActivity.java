@@ -50,8 +50,7 @@ public class PowerActivity extends AppCompatActivity {
 
         processIntent();
 
-        getSupportActionBar().setTitle(powersets.get(powerset_number).getPowers().get(power_number).getName());
-        Toast.makeText(this, String.valueOf(current_power.getAspects().get(2).isComplex()) + " " + current_power.getAspects().get(2).getName(), Toast.LENGTH_SHORT).show();
+        getSupportActionBar().setTitle(current_power.getName());
 
         initiateRecyclerView();
     }

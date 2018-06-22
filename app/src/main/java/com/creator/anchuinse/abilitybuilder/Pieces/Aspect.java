@@ -16,6 +16,7 @@ public class Aspect implements Parcelable{
     String description;
     PiecePart selected;
     ArrayList<PiecePart> piece_parts = new ArrayList<PiecePart>();
+    ArrayList<Aspect> sub_aspects = new ArrayList<Aspect>();
     int cost;
     boolean isComplex;
 
@@ -23,24 +24,6 @@ public class Aspect implements Parcelable{
         name = new_name;
         isComplex = false;
     }
-
-    public Aspect(String new_name, ArrayList<PiecePart> parts_list) {
-        name = new_name;
-        piece_parts = parts_list;
-        selected = parts_list.get(0);
-        cost = selected.getCost();
-        isComplex = false;
-    }
-
-    public Aspect(String new_name, ArrayList<PiecePart> parts_list, PiecePart new_selected) {
-        name = new_name;
-        piece_parts = parts_list;
-        selected = new_selected;
-        cost = selected.getCost();
-        isComplex = false;
-    }
-
-    //-----------
 
     //start of Parcelable chunk
 
@@ -171,11 +154,22 @@ public class Aspect implements Parcelable{
         parts.add(new PiecePart("Disbelief",2));
         parts.add(new PiecePart("Partial",3));
 
-        Aspect resisting = new Aspect("Ability Strength");
+        Aspect resisting = new Aspect("Resisting Effect");
         resisting.setDescription("This aspect describes what happens when the power is resisted successfully.");
         resisting.setPiece_parts(parts);
         resisting.setCheapestAsSelected();
         return resisting;
+    }
+
+    //-----------
+
+    public void refreshCost(){
+
+        int piece_total = 0;
+        for (int i = 0; i < sub_aspects.size(); i++) {
+            piece_total = piece_total + getSubAspects().get(i).getSelected().getCost();
+        }
+        setCost(piece_total);
     }
 
     //-----------
@@ -239,6 +233,21 @@ public class Aspect implements Parcelable{
 
     public void setComplex(boolean complex) {
         isComplex = complex;
+    }
+
+    //-----------
+
+    public ArrayList<Aspect> getSubAspects() {
+        return sub_aspects;
+    }
+
+    public void setSub_aspects(ArrayList<Aspect> sub_aspects) {
+        this.sub_aspects = sub_aspects;
+    }
+
+    public void addPiece(Aspect simple_piece){
+        getSubAspects().add(simple_piece);
+        refreshCost();
     }
 
     //start of Parcelable chunk

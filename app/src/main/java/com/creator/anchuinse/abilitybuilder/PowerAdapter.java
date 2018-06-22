@@ -24,7 +24,7 @@ import java.util.ArrayList;
  */
 
 public class PowerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    //adapter to hold all the aspects of a single power
+    //adapter to hold all the sub_aspects of a single power
 
     int powerset_number;
     int power_number;
