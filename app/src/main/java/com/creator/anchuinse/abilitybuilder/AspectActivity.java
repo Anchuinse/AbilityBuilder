@@ -52,6 +52,7 @@ public class AspectActivity extends AppCompatActivity {
 
         getIncomingIntent();
 
+        getSupportActionBar().setTitle(displayed_aspect.getName());
 
         //--------
 

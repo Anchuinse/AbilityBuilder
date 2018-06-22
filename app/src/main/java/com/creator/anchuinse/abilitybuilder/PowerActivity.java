@@ -50,6 +50,7 @@ public class PowerActivity extends AppCompatActivity {
 
         processIntent();
 
+        getSupportActionBar().setTitle(powersets.get(powerset_number).getPowers().get(power_number).getName());
 
         initiateRecyclerView();
     }

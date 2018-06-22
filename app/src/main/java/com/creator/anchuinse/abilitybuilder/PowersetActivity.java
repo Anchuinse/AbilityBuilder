@@ -44,6 +44,8 @@ public class PowersetActivity extends AppCompatActivity {
 
         getIncomingIntent();
 
+        getSupportActionBar().setTitle(powersets.get(powerset_number).getName());
+
         initiateRecyclerView();
     }
 

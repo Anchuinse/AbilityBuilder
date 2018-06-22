@@ -23,6 +23,8 @@
             android:launchMode="singleTask"/>
         <activity android:name=".AspectActivity"
             android:launchMode="singleTask"/>
+        <activity android:name=".ComplexAspectActivity"
+            android:launchMode="singleTask"/>
     </application>
 
 </manifest>
