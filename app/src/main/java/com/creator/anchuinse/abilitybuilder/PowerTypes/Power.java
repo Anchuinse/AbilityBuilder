@@ -68,7 +68,7 @@ public class Power implements Parcelable{
 
         int piece_total = 0;
         for (int i = 0; i < aspects.size(); i++) {
-            piece_total = piece_total + getAspects().get(i).getSelected().getCost();
+            piece_total = piece_total + getAspects().get(i).getCost();
         }
         setCurrent_cost(piece_total);
     }

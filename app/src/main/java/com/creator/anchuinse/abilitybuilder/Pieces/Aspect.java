@@ -16,6 +16,7 @@ public class Aspect implements Parcelable{
     String description;
     PiecePart selected;
     ArrayList<PiecePart> piece_parts = new ArrayList<PiecePart>();
+    int cost;
 
     public Aspect(String new_name) {
         name = new_name;
@@ -24,13 +25,15 @@ public class Aspect implements Parcelable{
     public Aspect(String new_name, ArrayList<PiecePart> parts_list) {
         name = new_name;
         piece_parts = parts_list;
-        selected = parts_list.get(0);                                                               //change this later to select the part with the lowest cost
+        selected = parts_list.get(0);
+        cost = selected.getCost();
     }
 
     public Aspect(String new_name, ArrayList<PiecePart> parts_list, PiecePart new_selected) {
         name = new_name;
         piece_parts = parts_list;
         selected = new_selected;
+        cost = selected.getCost();
     }
 
     //-----------
@@ -187,6 +190,7 @@ public class Aspect implements Parcelable{
 
     public void setSelected(PiecePart selected) {
         this.selected = selected;
+        setCost(selected.getCost());
     }
 
     public ArrayList<PiecePart> getPiece_parts() {
@@ -206,7 +210,7 @@ public class Aspect implements Parcelable{
                 cheapest = items.get(i);
             }
         }
-        this.setSelected(cheapest);
+        setSelected(cheapest);
     }
 
     public String getDescription() {
@@ -217,6 +221,13 @@ public class Aspect implements Parcelable{
         this.description = description;
     }
 
+    public int getCost(){
+        return cost;
+    }
+
+    public void setCost(int input_cost) {
+        this.cost = input_cost;
+    }
 
     //start of Parcelable chunk
 

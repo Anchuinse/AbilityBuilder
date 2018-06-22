@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.creator.anchuinse.abilitybuilder.Pieces.ComplexAspect;
 import com.creator.anchuinse.abilitybuilder.Pieces.Aspect;
@@ -51,13 +50,9 @@ public class PowerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         //important one to change how things are viewed along with ViewHolder object
         ((ViewHolder)holder).textView.setText(aspects.get(position).getName());
 
-        if(aspects.get(position) instanceof ComplexAspect) {
-            ((ViewHolder)holder).selected.setText(aspects.get(position).getSelected().getName());
-        }
-        else {
-            ((ViewHolder)holder).selected.setText(aspects.get(position).getSelected().getName() + ":");
-        }
-        ((ViewHolder)holder).cost.setText(String.valueOf(aspects.get(position).getSelected().getCost()));
+        ((ViewHolder)holder).selected.setText(aspects.get(position).getSelected().getName() + "  ");
+        ((ViewHolder)holder).cost.setText(Integer.toString(aspects.get(position).getCost()) + " ");
+
 
         //----------
 

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class ComplexAspect extends Aspect implements Parcelable{
 
-    ArrayList<Aspect> simpler_pieces = new ArrayList<Aspect>();
+    ArrayList<Aspect> sub_aspects = new ArrayList<Aspect>();
 
     public ComplexAspect(String new_name) {
         super(new_name);
@@ -20,11 +20,15 @@ public class ComplexAspect extends Aspect implements Parcelable{
 
     public ComplexAspect(String new_name, ArrayList<PiecePart> parts_list) {
         super(new_name, parts_list);
+        refreshCost();
     }
 
     public ComplexAspect(String new_name, ArrayList<PiecePart> parts_list, PiecePart new_selected) {
         super(new_name, parts_list, new_selected);
+        refreshCost();
     }
+
+
 
     //---------
 
@@ -32,18 +36,27 @@ public class ComplexAspect extends Aspect implements Parcelable{
 
     protected ComplexAspect(Parcel in) {
         super(in);
-        simpler_pieces = in.createTypedArrayList(Aspect.CREATOR);
+        sub_aspects = in.createTypedArrayList(Aspect.CREATOR);
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeTypedList(simpler_pieces);
+        dest.writeTypedList(sub_aspects);
     }
 
     @Override
     public int describeContents() {
         return 0;
+    }
+
+    public void refreshCost(){
+
+        int piece_total = 0;
+        for (int i = 0; i < sub_aspects.size(); i++) {
+            piece_total = piece_total + getSubAspects().get(i).getSelected().getCost();
+        }
+        setCost(piece_total);
     }
 
     public static final Creator<ComplexAspect> CREATOR = new Creator<ComplexAspect>() {
@@ -80,16 +93,16 @@ public class ComplexAspect extends Aspect implements Parcelable{
 
     //---------
 
-    public ArrayList<Aspect> getSimpler_pieces() {
-        return simpler_pieces;
+    public ArrayList<Aspect> getSubAspects() {
+        return sub_aspects;
     }
 
-    public void setSimpler_pieces(ArrayList<Aspect> simpler_pieces) {
-        this.simpler_pieces = simpler_pieces;
+    public void setSub_aspects(ArrayList<Aspect> sub_aspects) {
+        this.sub_aspects = sub_aspects;
     }
 
     public void addPiece(Aspect simple_piece){
-        this.getSimpler_pieces().add(simple_piece);
+        getSubAspects().add(simple_piece);
+        refreshCost();
     }
-
 }
