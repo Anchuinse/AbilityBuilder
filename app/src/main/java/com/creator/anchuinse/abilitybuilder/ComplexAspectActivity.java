@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.creator.anchuinse.abilitybuilder.Pieces.Aspect;
@@ -106,6 +107,8 @@ public class ComplexAspectActivity extends AppCompatActivity {
                     aspect_number = extras.getInt("aspect_number");
                     displayed_aspect = powersets.get(powerset_number).getPowers().get(power_number).getAspects().get(aspect_number);
                     sub_aspects = displayed_aspect.getSubAspects();
+
+                    setDisplayedCost(displayed_aspect.getCost());
                 }
             }
         }
@@ -114,6 +117,13 @@ public class ComplexAspectActivity extends AppCompatActivity {
     private void initiateRecyclerView() {
         recyclerView = (RecyclerView) findViewById(R.id.complex_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new PowerAdapter(this, powerset_number, power_number, sub_aspects));                           //passes the Items to the adapter
+        recyclerView.setAdapter(new ComplexAspectAdapter(this, powerset_number, power_number, aspect_number, sub_aspects));                           //passes the Items to the adapter
+    }
+
+    private void setDisplayedCost(int new_cost){
+
+        TextView current_cost = findViewById(R.id.complex_cost);
+        String display = Integer.toString(new_cost);
+        current_cost.setText("Cost: " + display);
     }
 }

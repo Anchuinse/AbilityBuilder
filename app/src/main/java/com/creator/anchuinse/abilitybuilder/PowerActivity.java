@@ -71,7 +71,7 @@ public class PowerActivity extends AppCompatActivity {
         resetRecyclerView();
         current_power.refreshCurrentCost();
         getWindow().getDecorView().findViewById(R.id.power_cost).invalidate();
-        setCurrentCost(current_power.getCurrent_cost());
+        setDisplayedCurrentCost(current_power.getCurrent_cost());
     }
 
     @Override
@@ -141,10 +141,10 @@ public class PowerActivity extends AppCompatActivity {
                 current_power = powersets.get(powerset_number).getPowers().get(power_number);
 
                 String name = current_power.getName();
-                setDescription(name);
+                setDisplayedDescription(name);
 
                 int cost = current_power.getCurrent_cost();
-                setCurrentCost(cost);
+                setDisplayedCurrentCost(cost);
 
                 aspects = current_power.getAspects();
             }
@@ -165,13 +165,13 @@ public class PowerActivity extends AppCompatActivity {
         }
     }
 
-    private void setDescription(String wanted_description){
+    private void setDisplayedDescription(String wanted_description){
 
         EditText description = findViewById(R.id.power_description);
         description.setText(wanted_description);
     }
 
-    private void setCurrentCost(int new_current_cost){
+    private void setDisplayedCurrentCost(int new_current_cost){
 
         TextView current_cost = findViewById(R.id.power_cost);
         String display = Integer.toString(new_current_cost);

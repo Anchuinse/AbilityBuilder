@@ -2,9 +2,6 @@ package com.creator.anchuinse.abilitybuilder.Pieces;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.widget.Toast;
-
-import java.util.ArrayList;
 
 /**
  * Created by Matt on 5/28/18.
@@ -53,8 +50,8 @@ public class ComplexAspect extends Aspect implements Parcelable{
     public static ComplexAspect Physical_Effected_Target(){
         ComplexAspect effected_target = new ComplexAspect("Effected Target");
 
-        effected_target.addPiece(Aspect.Effected_Target_Target_Type());
-        effected_target.addPiece(Aspect.Effected_Target_SoE());
+        effected_target.addSubAspect(Aspect.Effected_Target_Target_Type());
+        effected_target.addSubAspect(Aspect.Effected_Target_SoE());
 
         return(effected_target);
     }
@@ -62,8 +59,8 @@ public class ComplexAspect extends Aspect implements Parcelable{
     public static ComplexAspect Physical_Resistance(){
         ComplexAspect resistance = new ComplexAspect("Resistance");
 
-        resistance.addPiece(Aspect.Resistance_Strength());
-        resistance.addPiece(Aspect.Resisting_Effect());
+        resistance.addSubAspect(Aspect.Resistance_Strength());
+        resistance.addSubAspect(Aspect.Resisting_Effect());
 
         return(resistance);
     }

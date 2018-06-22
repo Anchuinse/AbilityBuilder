@@ -33,6 +33,7 @@ public class AspectActivity extends AppCompatActivity {
     int powerset_number;
     int power_number;
     int aspect_number;
+    int sub_aspect_number;
 
     ArrayList<PiecePart> pieces = new ArrayList<PiecePart>();
     ArrayList<Button> buttons = new ArrayList<Button>();
@@ -303,8 +304,14 @@ public class AspectActivity extends AppCompatActivity {
                 power_number = extras.getInt("power_number");
                 if (extras.containsKey("aspect_number")) {
                     aspect_number = extras.getInt("aspect_number");
+                    if (extras.containsKey("sub_aspect_number")) {
+                        sub_aspect_number = extras.getInt("sub_aspect_number");
 
-                    displayed_aspect = powersets.get(powerset_number).getPowers().get(power_number).getAspects().get(aspect_number);
+                        displayed_aspect = powersets.get(powerset_number).getPowers().get(power_number).getAspects().get(aspect_number).getSubAspects().get(sub_aspect_number);
+                    }
+                    else {
+                        displayed_aspect = powersets.get(powerset_number).getPowers().get(power_number).getAspects().get(aspect_number);
+                    }
                     pieces = displayed_aspect.getPiece_parts();
                 }
             }

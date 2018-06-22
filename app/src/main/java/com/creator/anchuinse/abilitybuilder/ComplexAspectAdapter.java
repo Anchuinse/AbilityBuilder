@@ -69,7 +69,10 @@ public class ComplexAspectAdapter extends RecyclerView.Adapter<RecyclerView.View
                 //use this to make changes, possible redundant version of this deleted from above
                 Intent intent = new Intent(context, AspectActivity.class);
                 Bundle extras = new Bundle();
-                //fill later
+                extras.putInt("powerset_number",powerset_number);
+                extras.putInt("power_number",power_number);
+                extras.putInt("aspect_number",aspect_number);
+                extras.putInt("sub_aspect_number",position);
                 intent.putExtras(extras);
                 context.startActivity(intent);
             }

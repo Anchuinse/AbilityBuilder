@@ -166,6 +166,7 @@ public class Aspect implements Parcelable{
     public void refreshCost(){
 
         int piece_total = 0;
+        piece_total = selected.getCost();
         for (int i = 0; i < sub_aspects.size(); i++) {
             piece_total = piece_total + getSubAspects().get(i).getSelected().getCost();
         }
@@ -245,8 +246,8 @@ public class Aspect implements Parcelable{
         this.sub_aspects = sub_aspects;
     }
 
-    public void addPiece(Aspect simple_piece){
-        getSubAspects().add(simple_piece);
+    public void addSubAspect(Aspect aspect){
+        getSubAspects().add(aspect);
         refreshCost();
     }
 
