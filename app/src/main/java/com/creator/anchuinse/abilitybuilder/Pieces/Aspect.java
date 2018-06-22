@@ -17,9 +17,11 @@ public class Aspect implements Parcelable{
     PiecePart selected;
     ArrayList<PiecePart> piece_parts = new ArrayList<PiecePart>();
     int cost;
+    boolean isComplex;
 
     public Aspect(String new_name) {
         name = new_name;
+        isComplex = false;
     }
 
     public Aspect(String new_name, ArrayList<PiecePart> parts_list) {
@@ -27,6 +29,7 @@ public class Aspect implements Parcelable{
         piece_parts = parts_list;
         selected = parts_list.get(0);
         cost = selected.getCost();
+        isComplex = false;
     }
 
     public Aspect(String new_name, ArrayList<PiecePart> parts_list, PiecePart new_selected) {
@@ -34,6 +37,7 @@ public class Aspect implements Parcelable{
         piece_parts = parts_list;
         selected = new_selected;
         cost = selected.getCost();
+        isComplex = false;
     }
 
     //-----------
@@ -227,6 +231,14 @@ public class Aspect implements Parcelable{
 
     public void setCost(int input_cost) {
         this.cost = input_cost;
+    }
+
+    public boolean isComplex() {
+        return isComplex;
+    }
+
+    public void setComplex(boolean complex) {
+        isComplex = complex;
     }
 
     //start of Parcelable chunk

@@ -16,16 +16,19 @@ public class ComplexAspect extends Aspect implements Parcelable{
     public ComplexAspect(String new_name) {
         super(new_name);
         selected = PiecePart.emptyPart();
+        setComplex(true);
     }
 
     public ComplexAspect(String new_name, ArrayList<PiecePart> parts_list) {
         super(new_name, parts_list);
         refreshCost();
+        setComplex(true);
     }
 
     public ComplexAspect(String new_name, ArrayList<PiecePart> parts_list, PiecePart new_selected) {
         super(new_name, parts_list, new_selected);
         refreshCost();
+        setComplex(true);
     }
 
 

@@ -116,7 +116,7 @@ public class PowerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override   //this is where the problem is
     public int getItemViewType(int position) {
-        if(aspects.get(position).getCost() == 2){
+        if(aspects.get(position).isComplex() == true){
             return ASPECT_TYPE_COMPLEX;
         }
         else {
