@@ -1,5 +1,6 @@
 package com.creator.anchuinse.abilitybuilder;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -34,6 +35,7 @@ public class AspectActivity extends AppCompatActivity {
     int power_number;
     int aspect_number;
     int sub_aspect_number;
+    boolean is_complex = false;
 
     ArrayList<PiecePart> pieces = new ArrayList<PiecePart>();
     ArrayList<Button> buttons = new ArrayList<Button>();
@@ -89,11 +91,7 @@ public class AspectActivity extends AppCompatActivity {
                 eight.setEnabled(true);
 
                 displayed_aspect.setSelected(pieces.get(0));
-
-                Intent intent = new Intent(context, PowerActivity.class);
-                intent.putExtra("aspect",displayed_aspect);
-
-                context.startActivity(intent);
+                createIntent();
 
             }
         });
@@ -111,10 +109,7 @@ public class AspectActivity extends AppCompatActivity {
                 eight.setEnabled(true);
 
                 displayed_aspect.setSelected(pieces.get(1));
-                Intent intent = new Intent(context, PowerActivity.class);
-                intent.putExtra("aspect",displayed_aspect);
-
-                context.startActivity(intent);
+                createIntent();
             }
         });
 
@@ -131,10 +126,7 @@ public class AspectActivity extends AppCompatActivity {
                 eight.setEnabled(true);
 
                 displayed_aspect.setSelected(pieces.get(2));
-                Intent intent = new Intent(context, PowerActivity.class);
-                intent.putExtra("aspect",displayed_aspect);
-
-                context.startActivity(intent);
+                createIntent();
             }
         });
 
@@ -151,10 +143,7 @@ public class AspectActivity extends AppCompatActivity {
                 eight.setEnabled(true);
 
                 displayed_aspect.setSelected(pieces.get(3));
-                Intent intent = new Intent(context, PowerActivity.class);
-                intent.putExtra("aspect",displayed_aspect);
-
-                context.startActivity(intent);
+                createIntent();
             }
         });
 
@@ -171,10 +160,7 @@ public class AspectActivity extends AppCompatActivity {
                 eight.setEnabled(true);
 
                 displayed_aspect.setSelected(pieces.get(4));
-                Intent intent = new Intent(context, PowerActivity.class);
-                intent.putExtra("aspect",displayed_aspect);
-
-                context.startActivity(intent);
+                createIntent();
             }
         });
 
@@ -191,10 +177,7 @@ public class AspectActivity extends AppCompatActivity {
                 eight.setEnabled(true);
 
                 displayed_aspect.setSelected(pieces.get(5));
-                Intent intent = new Intent(context, PowerActivity.class);
-                intent.putExtra("aspect",displayed_aspect);
-
-                context.startActivity(intent);
+                createIntent();
             }
         });
 
@@ -211,10 +194,7 @@ public class AspectActivity extends AppCompatActivity {
                 eight.setEnabled(true);
 
                 displayed_aspect.setSelected(pieces.get(6));
-                Intent intent = new Intent(context, PowerActivity.class);
-                intent.putExtra("aspect",displayed_aspect);
-
-                context.startActivity(intent);
+                createIntent();
             }
         });
 
@@ -231,10 +211,7 @@ public class AspectActivity extends AppCompatActivity {
                 eight.setEnabled(false);
 
                 displayed_aspect.setSelected(pieces.get(7));
-                Intent intent = new Intent(context, PowerActivity.class);
-                intent.putExtra("aspect",displayed_aspect);
-
-                context.startActivity(intent);
+                createIntent();
             }
         });
 
@@ -298,6 +275,10 @@ public class AspectActivity extends AppCompatActivity {
 
         assert extras != null;
 
+        if(extras.containsKey("is_complex")) {
+            is_complex = true;
+        }
+
         if(extras.containsKey("powerset_number")) {
             powerset_number = extras.getInt("powerset_number");
             if (extras.containsKey("power_number")) {
@@ -315,6 +296,21 @@ public class AspectActivity extends AppCompatActivity {
                     pieces = displayed_aspect.getPiece_parts();
                 }
             }
+        }
+    }
+
+    private void createIntent(){
+        if (is_complex == false) {
+            Intent intent = new Intent(context, PowerActivity.class);
+            intent.putExtra("aspect",displayed_aspect);
+
+            context.startActivity(intent);
+        }
+        if (is_complex == true) {
+            Intent intent = new Intent(context, ComplexAspectActivity.class);
+            intent.putExtra("aspect",displayed_aspect);
+
+            context.startActivity(intent);
         }
     }
 

@@ -51,6 +51,8 @@ public class ComplexAspectAdapter extends RecyclerView.Adapter<RecyclerView.View
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         //important one to change how things are viewed along with ViewHolder object
         ((ViewHolder)holder).textView.setText(sub_aspects.get(position).getName());
+        ((ViewHolder)holder).selected.setText(sub_aspects.get(position).getSelected().getName() + "  ");
+        ((ViewHolder)holder).cost.setText(Integer.toString(sub_aspects.get(position).getCost()) + " ");
 
         //----------
 
@@ -73,6 +75,7 @@ public class ComplexAspectAdapter extends RecyclerView.Adapter<RecyclerView.View
                 extras.putInt("power_number",power_number);
                 extras.putInt("aspect_number",aspect_number);
                 extras.putInt("sub_aspect_number",position);
+                extras.putBoolean("is_complex",true);
                 intent.putExtras(extras);
                 context.startActivity(intent);
             }

@@ -7,10 +7,18 @@
         android:title="Add"
         app:showAsAction="always" />
 
+    <item android:id="@+id/powerset_save"
+        android:title="Save"
+        android:icon="@drawable/ic_save"
+        app:showAsAction="always"/>
+
     <item android:id="@+id/powerset_help"
-        android:icon="@drawable/ic_help"
         android:title="Help"
-        app:showAsAction="always" />
+        app:showAsAction="never" />
+
+    <item android:id="@+id/change_powerset_name"
+        android:title="Change Name"
+        app:showAsAction="never" />
 
     <item android:id="@+id/menu_example"
         android:title="example menu"

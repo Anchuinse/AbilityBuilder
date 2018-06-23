@@ -58,6 +58,25 @@ public class ComplexAspectActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume(){
+        super.onResume();
+        loadData();
+        resetRecyclerView();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        setIntent(intent);
+        processIntent();
+        loadData();
+
+        resetRecyclerView();
+        displayed_aspect.refreshCost();
+        getWindow().getDecorView().findViewById(R.id.complex_cost).invalidate();
+        setDisplayedCost(displayed_aspect.getCost());
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.aspect_menu, menu);
@@ -92,12 +111,22 @@ public class ComplexAspectActivity extends AppCompatActivity {
         powersets = gson.fromJson(json,type);
     }
 
+    private void resetRecyclerView() {
+        recyclerView.setLayoutManager(null);
+        recyclerView.setAdapter(null);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(new ComplexAspectAdapter(this,powerset_number, power_number, aspect_number, sub_aspects));
+        recyclerView.getAdapter().notifyDataSetChanged();
+    }
+
     private void processIntent() {
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
 
         assert extras != null;
+
+        //from PowerActivity
 
         if(extras.containsKey("powerset_number")) {
             powerset_number = extras.getInt("powerset_number");
@@ -111,6 +140,23 @@ public class ComplexAspectActivity extends AppCompatActivity {
                     setDisplayedCost(displayed_aspect.getCost());
                 }
             }
+        }
+
+        //from AspectActivity
+
+        if(getIntent().hasExtra("aspect")){
+            Aspect changed = getIntent().getParcelableExtra("aspect");
+            for (int i = 0; i < displayed_aspect.getSubAspects().size(); i++){
+                if (displayed_aspect.getSubAspects().get(i).getName().equals(changed.getName())){
+                    displayed_aspect.getSubAspects().get(i).setSelected(changed.getSelected());
+                }
+            }
+            displayed_aspect.refreshCost();
+            setDisplayedCost(displayed_aspect.getCost());
+
+            powersets.get(powerset_number).getPowers().get(power_number).getAspects().get(aspect_number).overwriteAspectWith(displayed_aspect);
+            powersets.get(powerset_number).getPowers().get(power_number).refreshCurrentCost();
+            saveData();
         }
     }
 

@@ -32,6 +32,7 @@ public class PowersetActivity extends AppCompatActivity {
     int powerset_number;
     ArrayList<Power> powers = new ArrayList<Power>();
     SharedPreferences data;
+    EditText editText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,7 @@ public class PowersetActivity extends AppCompatActivity {
 
         getSupportActionBar().setTitle(powersets.get(powerset_number).getName());
 
+        setDescription(powersets.get(powerset_number).getDescription());
         initiateRecyclerView();
     }
 
@@ -72,6 +74,14 @@ public class PowersetActivity extends AppCompatActivity {
             case R.id.powerset_help:
                 Toast.makeText(this, "powerset help clicked", Toast.LENGTH_SHORT).show();
                 return true;
+            case R.id.powerset_save:
+                editText = findViewById(R.id.powerset_description);
+                String description = editText.getText().toString();
+                powersets.get(powerset_number).setDescription(description);
+                saveData();
+                Toast.makeText(this, description, Toast.LENGTH_SHORT).show();
+                loadData();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -92,6 +102,8 @@ public class PowersetActivity extends AppCompatActivity {
         String json = data.getString("data",null);
         Type type = new TypeToken<ArrayList<Powerset>>() {}.getType();
         powersets = gson.fromJson(json,type);
+
+        powers = powersets.get(powerset_number).getPowers();
     }
 
     private void initiateRecyclerView() {

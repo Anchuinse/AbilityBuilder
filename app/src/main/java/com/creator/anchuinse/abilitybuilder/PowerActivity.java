@@ -35,6 +35,7 @@ public class PowerActivity extends AppCompatActivity {
     int power_number;
 
     RecyclerView recyclerView;
+    EditText editText;
     Power current_power;
     ArrayList<Aspect> aspects = new ArrayList<Aspect>();
 
@@ -52,6 +53,7 @@ public class PowerActivity extends AppCompatActivity {
 
         getSupportActionBar().setTitle(current_power.getName());
 
+        setDisplayedDescription(powersets.get(powerset_number).getPowers().get(power_number).getDescription());
         initiateRecyclerView();
     }
 
@@ -87,6 +89,14 @@ public class PowerActivity extends AppCompatActivity {
             case R.id.power_help:
                 Toast.makeText(this, "power help clicked", Toast.LENGTH_SHORT).show();
                 return true;
+            case R.id.power_save:
+                editText = findViewById(R.id.power_description);
+                String description = editText.getText().toString();
+                current_power.setDescription(description);
+                powersets.get(powerset_number).getPowers().get(power_number).overwritePowerWith(current_power);
+                saveData();
+                loadData();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -107,6 +117,11 @@ public class PowerActivity extends AppCompatActivity {
         String json = data.getString("data",null);
         Type type = new TypeToken<ArrayList<Powerset>>() {}.getType();
         powersets = gson.fromJson(json,type);
+
+        aspects = powersets.get(powerset_number).getPowers().get(power_number).getAspects();
+        current_power = powersets.get(powerset_number).getPowers().get(power_number);
+        current_power.refreshCurrentCost();
+        setDisplayedCurrentCost(current_power.getCurrent_cost());
     }
 
     private void initiateRecyclerView() {

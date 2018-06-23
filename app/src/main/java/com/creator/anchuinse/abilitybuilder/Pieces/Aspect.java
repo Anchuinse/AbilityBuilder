@@ -3,6 +3,8 @@ package com.creator.anchuinse.abilitybuilder.Pieces;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.creator.anchuinse.abilitybuilder.PowerTypes.Power;
+
 import java.util.ArrayList;
 
 /**
@@ -121,7 +123,7 @@ public class Aspect implements Parcelable{
 
     public static Aspect Effected_Target_SoE(){
         ArrayList<PiecePart> parts = new ArrayList<PiecePart>();
-        parts.add(new PiecePart("None/Ray/Point",1));
+        parts.add(new PiecePart("Point/Ray",1));
         parts.add(new PiecePart("Line",2));
         parts.add(new PiecePart("Cone",3));
 
@@ -249,6 +251,16 @@ public class Aspect implements Parcelable{
     public void addSubAspect(Aspect aspect){
         getSubAspects().add(aspect);
         refreshCost();
+    }
+
+    public void overwriteAspectWith(Aspect new_aspect){
+        this.name = new_aspect.getName();
+        this.description = new_aspect.getDescription();
+        this.selected = new_aspect.getSelected();
+        this.piece_parts = new_aspect.getPiece_parts();
+        this.sub_aspects = new_aspect.getSubAspects();
+        this.cost = new_aspect.getCost();
+        this.isComplex = new_aspect.isComplex();
     }
 
     //start of Parcelable chunk

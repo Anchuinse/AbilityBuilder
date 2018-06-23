@@ -39,8 +39,6 @@ public class Power implements Parcelable{
         ArrayList<Aspect> categories = new ArrayList<Aspect>();
     }
 
-    //-------
-
     //start of Parcelable chunk
 
     protected Power(Parcel in) {
@@ -66,11 +64,11 @@ public class Power implements Parcelable{
 
     public void refreshCurrentCost(){
 
-        int piece_total = 0;
+        int aspect_total = 0;
         for (int i = 0; i < aspects.size(); i++) {
-            piece_total = piece_total + getAspects().get(i).getCost();
+            aspect_total = aspect_total + getAspects().get(i).getCost();
         }
-        setCurrent_cost(piece_total);
+        setCurrent_cost(aspect_total);
     }
 
     //-------
