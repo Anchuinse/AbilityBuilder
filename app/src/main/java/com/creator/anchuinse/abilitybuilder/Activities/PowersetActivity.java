@@ -1,4 +1,4 @@
-package com.creator.anchuinse.abilitybuilder;
+package com.creator.anchuinse.abilitybuilder.Activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,10 +11,14 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.creator.anchuinse.abilitybuilder.Adapters.PowersetAdapter;
 import com.creator.anchuinse.abilitybuilder.Pieces.Powerset;
 import com.creator.anchuinse.abilitybuilder.PowerTypes.Power;
+import com.creator.anchuinse.abilitybuilder.Dialogs.PowersetNameDialog;
+import com.creator.anchuinse.abilitybuilder.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -25,7 +29,7 @@ import java.util.ArrayList;
  * Created by Matt on 5/28/18.
  */
 
-public class PowersetActivity extends AppCompatActivity {
+public class PowersetActivity extends AppCompatActivity implements PowersetNameDialog.PowersetNameDialogListener {
 
     RecyclerView recyclerView;                                             //make sure to initiate lists used in RecyclerView right away
     ArrayList<Powerset> powersets = new ArrayList<Powerset>();
@@ -48,6 +52,7 @@ public class PowersetActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(powersets.get(powerset_number).getName());
 
         setDescription(powersets.get(powerset_number).getDescription());
+        setCosts(powersets.get(powerset_number).getCurrentCost(),powersets.get(powerset_number).getMaxCost());
         initiateRecyclerView();
     }
 
@@ -82,9 +87,25 @@ public class PowersetActivity extends AppCompatActivity {
                 Toast.makeText(this, description, Toast.LENGTH_SHORT).show();
                 loadData();
                 return true;
+            case R.id.change_powerset_name:
+                openDialog();
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void applyText(String input_name) {
+        String new_name = input_name;
+        powersets.get(powerset_number).setName(new_name);
+        saveData();
+        loadData();
+        getSupportActionBar().setTitle(powersets.get(powerset_number).getName());
+    }
+
+    public void openDialog() {
+        PowersetNameDialog dialog = new PowersetNameDialog();
+        dialog.show(getSupportFragmentManager(),"powerset name dialog");
     }
 
     private void saveData(){
@@ -104,6 +125,8 @@ public class PowersetActivity extends AppCompatActivity {
         powersets = gson.fromJson(json,type);
 
         powers = powersets.get(powerset_number).getPowers();
+        powersets.get(powerset_number).refreshCurrentCost();
+        setCosts(powersets.get(powerset_number).getCurrentCost(),powersets.get(powerset_number).getMaxCost());
     }
 
     private void initiateRecyclerView() {
@@ -137,10 +160,15 @@ public class PowersetActivity extends AppCompatActivity {
 
     }
 
-    private void setDescription(String wanted_description){
+    private void setDescription(String input_description){
 
         EditText description = findViewById(R.id.powerset_description);
-        description.setText(wanted_description);
+        description.setText(input_description);
+    }
+
+    private void setCosts(int new_current, int new_total) {
+        TextView cost = findViewById(R.id.powerset_costs);
+        cost.setText(String.valueOf(new_current) + "/" + String.valueOf(new_total));
     }
 
 }

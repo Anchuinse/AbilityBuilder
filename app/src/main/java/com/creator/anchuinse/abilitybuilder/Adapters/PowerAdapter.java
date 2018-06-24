@@ -1,4 +1,4 @@
-package com.creator.anchuinse.abilitybuilder;
+package com.creator.anchuinse.abilitybuilder.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,11 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.creator.anchuinse.abilitybuilder.Pieces.ComplexAspect;
+import com.creator.anchuinse.abilitybuilder.Activities.AspectActivity;
+import com.creator.anchuinse.abilitybuilder.Activities.ComplexAspectActivity;
 import com.creator.anchuinse.abilitybuilder.Pieces.Aspect;
-import com.creator.anchuinse.abilitybuilder.Pieces.PiecePart;
+import com.creator.anchuinse.abilitybuilder.R;
 
 import java.util.ArrayList;
 

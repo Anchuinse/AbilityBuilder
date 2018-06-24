@@ -1,6 +1,5 @@
-package com.creator.anchuinse.abilitybuilder;
+package com.creator.anchuinse.abilitybuilder.Activities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,6 +16,7 @@ import android.widget.Toast;
 import com.creator.anchuinse.abilitybuilder.Pieces.Aspect;
 import com.creator.anchuinse.abilitybuilder.Pieces.PiecePart;
 import com.creator.anchuinse.abilitybuilder.Pieces.Powerset;
+import com.creator.anchuinse.abilitybuilder.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -36,6 +36,10 @@ public class AspectActivity extends AppCompatActivity {
     int aspect_number;
     int sub_aspect_number;
     boolean is_complex = false;
+
+    int current_cost;
+    int max_cost;
+    PiecePart selected;
 
     ArrayList<PiecePart> pieces = new ArrayList<PiecePart>();
     ArrayList<Button> buttons = new ArrayList<Button>();
@@ -81,17 +85,23 @@ public class AspectActivity extends AppCompatActivity {
         one.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                one.setEnabled(false);
-                two.setEnabled(true);
-                three.setEnabled(true);
-                four.setEnabled(true);
-                five.setEnabled(true);
-                six.setEnabled(true);
-                seven.setEnabled(true);
-                eight.setEnabled(true);
+                if (max_cost-current_cost >= pieces.get(0).getCost()-selected.getCost()) {
+                    one.setEnabled(false);
+                    two.setEnabled(true);
+                    three.setEnabled(true);
+                    four.setEnabled(true);
+                    five.setEnabled(true);
+                    six.setEnabled(true);
+                    seven.setEnabled(true);
+                    eight.setEnabled(true);
 
-                displayed_aspect.setSelected(pieces.get(0));
-                createIntent();
+                    displayed_aspect.setSelected(pieces.get(0));
+
+                    createIntent();
+                }
+                else {
+                    Toast.makeText(context, String.valueOf(max_cost) + String.valueOf(current_cost) + String.valueOf(pieces.get(0).getCost()) + String.valueOf(selected.getCost()), Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
@@ -99,119 +109,154 @@ public class AspectActivity extends AppCompatActivity {
         two.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                one.setEnabled(true);
-                two.setEnabled(false);
-                three.setEnabled(true);
-                four.setEnabled(true);
-                five.setEnabled(true);
-                six.setEnabled(true);
-                seven.setEnabled(true);
-                eight.setEnabled(true);
+                if (max_cost-current_cost >= pieces.get(1).getCost()-selected.getCost()) {
+                    one.setEnabled(true);
+                    two.setEnabled(false);
+                    three.setEnabled(true);
+                    four.setEnabled(true);
+                    five.setEnabled(true);
+                    six.setEnabled(true);
+                    seven.setEnabled(true);
+                    eight.setEnabled(true);
 
-                displayed_aspect.setSelected(pieces.get(1));
-                createIntent();
+                    displayed_aspect.setSelected(pieces.get(1));
+                    createIntent();
+                }
+                else {
+                    Toast.makeText(context, String.valueOf(max_cost) + String.valueOf(current_cost) + String.valueOf(pieces.get(1).getCost()) + String.valueOf(selected.getCost()), Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
         three.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                one.setEnabled(true);
-                two.setEnabled(true);
-                three.setEnabled(false);
-                four.setEnabled(true);
-                five.setEnabled(true);
-                six.setEnabled(true);
-                seven.setEnabled(true);
-                eight.setEnabled(true);
+                if (max_cost-current_cost >= pieces.get(2).getCost()-selected.getCost()) {
+                    one.setEnabled(true);
+                    two.setEnabled(true);
+                    three.setEnabled(false);
+                    four.setEnabled(true);
+                    five.setEnabled(true);
+                    six.setEnabled(true);
+                    seven.setEnabled(true);
+                    eight.setEnabled(true);
 
-                displayed_aspect.setSelected(pieces.get(2));
-                createIntent();
+                    displayed_aspect.setSelected(pieces.get(2));
+                    createIntent();
+                }
+                else {
+                    Toast.makeText(context, "Exceeds Max Cost", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
         four.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                one.setEnabled(true);
-                two.setEnabled(true);
-                three.setEnabled(true);
-                four.setEnabled(false);
-                five.setEnabled(true);
-                six.setEnabled(true);
-                seven.setEnabled(true);
-                eight.setEnabled(true);
+                if (max_cost-current_cost >= pieces.get(3).getCost()-selected.getCost()) {
+                    one.setEnabled(true);
+                    two.setEnabled(true);
+                    three.setEnabled(true);
+                    four.setEnabled(false);
+                    five.setEnabled(true);
+                    six.setEnabled(true);
+                    seven.setEnabled(true);
+                    eight.setEnabled(true);
 
-                displayed_aspect.setSelected(pieces.get(3));
-                createIntent();
+                    displayed_aspect.setSelected(pieces.get(3));
+                    createIntent();
+                }
+                else {
+                    Toast.makeText(context, "Exceeds Max Cost", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
         five.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                one.setEnabled(true);
-                two.setEnabled(true);
-                three.setEnabled(true);
-                four.setEnabled(true);
-                five.setEnabled(false);
-                six.setEnabled(true);
-                seven.setEnabled(true);
-                eight.setEnabled(true);
+                if (max_cost-current_cost >= pieces.get(4).getCost()-selected.getCost()) {
+                    one.setEnabled(true);
+                    two.setEnabled(true);
+                    three.setEnabled(true);
+                    four.setEnabled(true);
+                    five.setEnabled(false);
+                    six.setEnabled(true);
+                    seven.setEnabled(true);
+                    eight.setEnabled(true);
 
-                displayed_aspect.setSelected(pieces.get(4));
-                createIntent();
+                    displayed_aspect.setSelected(pieces.get(4));
+                    createIntent();
+                }
+                else {
+                    Toast.makeText(context, "Exceeds Max Cost", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
         six.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                one.setEnabled(true);
-                two.setEnabled(true);
-                three.setEnabled(true);
-                four.setEnabled(true);
-                five.setEnabled(true);
-                six.setEnabled(false);
-                seven.setEnabled(true);
-                eight.setEnabled(true);
+                if (max_cost-current_cost >= pieces.get(5).getCost()-selected.getCost()) {
+                    one.setEnabled(true);
+                    two.setEnabled(true);
+                    three.setEnabled(true);
+                    four.setEnabled(true);
+                    five.setEnabled(true);
+                    six.setEnabled(false);
+                    seven.setEnabled(true);
+                    eight.setEnabled(true);
 
-                displayed_aspect.setSelected(pieces.get(5));
-                createIntent();
+                    displayed_aspect.setSelected(pieces.get(5));
+                    createIntent();
+                }
+                else {
+                    Toast.makeText(context, "Exceeds Max Cost", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
         seven.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                one.setEnabled(true);
-                two.setEnabled(true);
-                three.setEnabled(true);
-                four.setEnabled(true);
-                five.setEnabled(true);
-                six.setEnabled(true);
-                seven.setEnabled(false);
-                eight.setEnabled(true);
+                if (max_cost-current_cost >= pieces.get(6).getCost()-selected.getCost()) {
+                    one.setEnabled(true);
+                    two.setEnabled(true);
+                    three.setEnabled(true);
+                    four.setEnabled(true);
+                    five.setEnabled(true);
+                    six.setEnabled(true);
+                    seven.setEnabled(false);
+                    eight.setEnabled(true);
 
-                displayed_aspect.setSelected(pieces.get(6));
-                createIntent();
+                    displayed_aspect.setSelected(pieces.get(6));
+                    createIntent();
+                }
+                else {
+                    Toast.makeText(context, "Exceeds Max Cost", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
         eight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                one.setEnabled(true);
-                two.setEnabled(true);
-                three.setEnabled(true);
-                four.setEnabled(true);
-                five.setEnabled(true);
-                six.setEnabled(true);
-                seven.setEnabled(true);
-                eight.setEnabled(false);
+                if (max_cost-current_cost >= pieces.get(7).getCost()-selected.getCost()) {
+                    one.setEnabled(true);
+                    two.setEnabled(true);
+                    three.setEnabled(true);
+                    four.setEnabled(true);
+                    five.setEnabled(true);
+                    six.setEnabled(true);
+                    seven.setEnabled(true);
+                    eight.setEnabled(false);
 
-                displayed_aspect.setSelected(pieces.get(7));
-                createIntent();
+                    displayed_aspect.setSelected(pieces.get(7));
+                    createIntent();
+                }
+                else {
+                    Toast.makeText(context, "Exceeds Max Cost", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -289,9 +334,17 @@ public class AspectActivity extends AppCompatActivity {
                         sub_aspect_number = extras.getInt("sub_aspect_number");
 
                         displayed_aspect = powersets.get(powerset_number).getPowers().get(power_number).getAspects().get(aspect_number).getSubAspects().get(sub_aspect_number);
+                        current_cost = powersets.get(powerset_number).getCurrentCost();
+                        max_cost = powersets.get(powerset_number).getMaxCost();
+                        selected = displayed_aspect.getSelected();
+                        Toast.makeText(context, String.valueOf(current_cost) + " sub", Toast.LENGTH_SHORT).show();
                     }
                     else {
                         displayed_aspect = powersets.get(powerset_number).getPowers().get(power_number).getAspects().get(aspect_number);
+                        current_cost = powersets.get(powerset_number).getCurrentCost();
+                        max_cost = powersets.get(powerset_number).getMaxCost();
+                        selected = displayed_aspect.getSelected();
+                        Toast.makeText(context, String.valueOf(current_cost) + " basic", Toast.LENGTH_SHORT).show();
                     }
                     pieces = displayed_aspect.getPiece_parts();
                 }

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class Powerset implements Parcelable{
 
     String name;
-    int total_cost;
+    int max_cost;
     int current_cost;
     String description;
     ArrayList<Power> powers = new ArrayList<Power>();
@@ -23,14 +23,15 @@ public class Powerset implements Parcelable{
     public Powerset(String new_name, int new_total) {
 
         name = new_name;
-        total_cost = new_total;
+        max_cost = new_total;
         current_cost = 0;
         description = "no description";
     }
 
     public static Powerset examplePowerset(){
-        Powerset examplePowerset = new Powerset("example",100);
+        Powerset examplePowerset = new Powerset("example",20);
         examplePowerset.getPowers().add(new PhysicalPower("Physical Example"));
+        examplePowerset.refreshCurrentCost();
         return examplePowerset;
     }
 
@@ -38,7 +39,7 @@ public class Powerset implements Parcelable{
 
     protected Powerset(Parcel in) {
         name = in.readString();
-        total_cost = in.readInt();
+        max_cost = in.readInt();
         current_cost = in.readInt();
         description = in.readString();
         powers = in.createTypedArrayList(Power.CREATOR);
@@ -66,12 +67,12 @@ public class Powerset implements Parcelable{
         this.name = name;
     }
 
-    public int getTotal_cost() {
-        return total_cost;
+    public int getMaxCost() {
+        return max_cost;
     }
 
-    public void setTotal_cost(int total_cost) {
-        this.total_cost = total_cost;
+    public void setMaxCost(int total_cost) {
+        this.max_cost = total_cost;
     }
 
     public String getDescription() {
@@ -90,18 +91,26 @@ public class Powerset implements Parcelable{
         this.powers = powers;
     }
 
-    public int getCurrent_cost() {
+    public int getCurrentCost() {
         return current_cost;
     }
 
-    public void setCurrent_cost(int current_cost) {
+    public void setCurrentCost(int current_cost) {
         this.current_cost = current_cost;
+    }
+
+    public void refreshCurrentCost() {
+        int cost = 0;
+        for (int i = 0; i < powers.size(); ++i) {
+            cost = cost + powers.get(i).getCurrent_cost();
+        }
+        setCurrentCost(cost);
     }
 
     public void overwritePowersetWith(Powerset new_powerset){
         this.name = new_powerset.getName();
-        this.total_cost = new_powerset.getTotal_cost();
-        this.current_cost = new_powerset.getCurrent_cost();
+        this.max_cost = new_powerset.getMaxCost();
+        this.current_cost = new_powerset.getCurrentCost();
         this.description = new_powerset.getDescription();
         this.powers = new_powerset.getPowers();
     }
@@ -116,7 +125,7 @@ public class Powerset implements Parcelable{
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(name);
-        parcel.writeInt(total_cost);
+        parcel.writeInt(max_cost);
         parcel.writeInt(current_cost);
         parcel.writeString(description);
         parcel.writeTypedList(powers);

@@ -1,4 +1,4 @@
-package com.creator.anchuinse.abilitybuilder;
+package com.creator.anchuinse.abilitybuilder.Activities;
 
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +11,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.creator.anchuinse.abilitybuilder.Adapters.MasterAdapter;
 import com.creator.anchuinse.abilitybuilder.Pieces.Powerset;
+import com.creator.anchuinse.abilitybuilder.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

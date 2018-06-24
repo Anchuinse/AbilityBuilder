@@ -1,4 +1,4 @@
-package com.creator.anchuinse.abilitybuilder;
+package com.creator.anchuinse.abilitybuilder.Activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,9 +14,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.creator.anchuinse.abilitybuilder.Adapters.PowerAdapter;
 import com.creator.anchuinse.abilitybuilder.Pieces.Aspect;
 import com.creator.anchuinse.abilitybuilder.Pieces.Powerset;
+import com.creator.anchuinse.abilitybuilder.Dialogs.PowerNameDialog;
 import com.creator.anchuinse.abilitybuilder.PowerTypes.Power;
+import com.creator.anchuinse.abilitybuilder.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -27,7 +30,7 @@ import java.util.ArrayList;
  * Created by Matt on 5/28/18.
  */
 
-public class PowerActivity extends AppCompatActivity {
+public class PowerActivity extends AppCompatActivity implements PowerNameDialog.PowerNameDialogListener {
 
     SharedPreferences data;
     ArrayList<Powerset> powersets = new ArrayList<Powerset>();
@@ -58,10 +61,11 @@ public class PowerActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
         loadData();
         resetRecyclerView();
+        saveData();
     }
 
     @Override
@@ -71,9 +75,7 @@ public class PowerActivity extends AppCompatActivity {
         loadData();
 
         resetRecyclerView();
-        current_power.refreshCurrentCost();
         getWindow().getDecorView().findViewById(R.id.power_cost).invalidate();
-        setDisplayedCurrentCost(current_power.getCurrent_cost());
     }
 
     @Override
@@ -97,12 +99,28 @@ public class PowerActivity extends AppCompatActivity {
                 saveData();
                 loadData();
                 return true;
+            case R.id.change_power_name:
+                openDialog();
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    private void saveData(){
+    @Override
+    public void applyText(String input_name) {
+        String new_name = input_name;
+        powersets.get(powerset_number).getPowers().get(power_number).setName(new_name);
+        saveData();
+        loadData();
+        getSupportActionBar().setTitle(current_power.getName());
+    }
+
+    public void openDialog() {
+        PowerNameDialog dialog = new PowerNameDialog();
+        dialog.show(getSupportFragmentManager(),"power name dialog");
+    }
+
+    private void saveData() {
         data = getSharedPreferences("data",MODE_PRIVATE);
         SharedPreferences.Editor editor = data.edit();
         Gson gson = new Gson();
@@ -111,7 +129,7 @@ public class PowerActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    private void loadData(){
+    private void loadData() {
         data = getSharedPreferences("data",MODE_PRIVATE);
         Gson gson = new Gson();
         String json = data.getString("data",null);
@@ -121,6 +139,8 @@ public class PowerActivity extends AppCompatActivity {
         aspects = powersets.get(powerset_number).getPowers().get(power_number).getAspects();
         current_power = powersets.get(powerset_number).getPowers().get(power_number);
         current_power.refreshCurrentCost();
+        powersets.get(powerset_number).getPowers().get(power_number).overwritePowerWith(current_power);
+        powersets.get(powerset_number).refreshCurrentCost();
         setDisplayedCurrentCost(current_power.getCurrent_cost());
     }
 
@@ -138,7 +158,7 @@ public class PowerActivity extends AppCompatActivity {
         recyclerView.getAdapter().notifyDataSetChanged();
     }
 
-    private void processIntent(){
+    private void processIntent() {
         //.hasExtra("name") is a boolean to see if the intent had extras with the label "name"
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
@@ -176,21 +196,23 @@ public class PowerActivity extends AppCompatActivity {
                 }
             }
             powersets.get(powerset_number).getPowers().get(power_number).overwritePowerWith(current_power);
+            powersets.get(powerset_number).refreshCurrentCost();
             saveData();
+            loadData();
+            Toast.makeText(this, String.valueOf(powersets.get(powerset_number).getCurrentCost()), Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void setDisplayedDescription(String wanted_description){
+    private void setDisplayedDescription(String wanted_description) {
 
         EditText description = findViewById(R.id.power_description);
         description.setText(wanted_description);
     }
 
-    private void setDisplayedCurrentCost(int new_current_cost){
+    private void setDisplayedCurrentCost(int new_current_cost) {
 
         TextView current_cost = findViewById(R.id.power_cost);
         String display = Integer.toString(new_current_cost);
         current_cost.setText("Cost: " + display);
     }
-
 }

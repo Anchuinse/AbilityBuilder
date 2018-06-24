@@ -1,4 +1,4 @@
-package com.creator.anchuinse.abilitybuilder;
+package com.creator.anchuinse.abilitybuilder.Activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,8 +14,10 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.creator.anchuinse.abilitybuilder.Adapters.ComplexAspectAdapter;
 import com.creator.anchuinse.abilitybuilder.Pieces.Aspect;
 import com.creator.anchuinse.abilitybuilder.Pieces.Powerset;
+import com.creator.anchuinse.abilitybuilder.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -58,7 +60,7 @@ public class ComplexAspectActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
         loadData();
         resetRecyclerView();
@@ -94,7 +96,7 @@ public class ComplexAspectActivity extends AppCompatActivity {
         }
     }
 
-    private void saveData(){
+    private void saveData() {
         data = getSharedPreferences("data",MODE_PRIVATE);
         SharedPreferences.Editor editor = data.edit();
         Gson gson = new Gson();
@@ -103,7 +105,7 @@ public class ComplexAspectActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    private void loadData(){
+    private void loadData() {
         data = getSharedPreferences("data",MODE_PRIVATE);
         Gson gson = new Gson();
         String json = data.getString("data",null);
@@ -156,7 +158,9 @@ public class ComplexAspectActivity extends AppCompatActivity {
 
             powersets.get(powerset_number).getPowers().get(power_number).getAspects().get(aspect_number).overwriteAspectWith(displayed_aspect);
             powersets.get(powerset_number).getPowers().get(power_number).refreshCurrentCost();
+            powersets.get(powerset_number).refreshCurrentCost();
             saveData();
+            loadData();
         }
     }
 
@@ -166,7 +170,7 @@ public class ComplexAspectActivity extends AppCompatActivity {
         recyclerView.setAdapter(new ComplexAspectAdapter(this, powerset_number, power_number, aspect_number, sub_aspects));                           //passes the Items to the adapter
     }
 
-    private void setDisplayedCost(int new_cost){
+    private void setDisplayedCost(int new_cost) {
 
         TextView current_cost = findViewById(R.id.complex_cost);
         String display = Integer.toString(new_cost);

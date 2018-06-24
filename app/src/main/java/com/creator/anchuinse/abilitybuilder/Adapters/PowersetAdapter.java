@@ -1,8 +1,7 @@
-package com.creator.anchuinse.abilitybuilder;
+package com.creator.anchuinse.abilitybuilder.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -12,10 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.creator.anchuinse.abilitybuilder.Pieces.Powerset;
+import com.creator.anchuinse.abilitybuilder.Activities.PowerActivity;
 import com.creator.anchuinse.abilitybuilder.PowerTypes.Power;
+import com.creator.anchuinse.abilitybuilder.R;
 
 import java.util.ArrayList;
 
